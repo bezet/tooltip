@@ -1,0 +1,77 @@
+@mixin arrow($direction: 'up', $height: 10px, $color: #333) {
+  border: $height solid transparent;
+
+  @if $direction == 'up' {
+    border-bottom-color: $color;
+    border-top-width: 0;
+
+  } @else if $direction == 'down' {
+    border-top-color: $color;
+    border-bottom-width: 0;
+
+  } @else if $direction == 'left' {
+    border-right-color: $color;
+    border-left-width: 0;
+
+  } @else if $direction == 'right' {
+    border-left-color: $color;
+    border-right-width: 0;
+  }
+}
+
+@mixin tooltip-arrow($position: 'top-center', $height: 10px, $color: #333) {
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+
+    @if $position == 'top-center' {
+      top: -$height;
+      left: 50%;
+      margin-left: -$height;
+      @include arrow('up', $height, $color);
+
+    } @else if $position == 'bottom-center' {
+      bottom: -$height;
+      left: 50%;
+      margin-left: -$height;
+      @include arrow('down', $height, $color);
+
+    } @else if $position == 'left-center' {
+      top: 50%;
+      left: -$height;
+      margin-top: -$height;
+      @include arrow('left', $height, $color);
+
+    } @else if $position == 'right-center' {
+      top: 50%;
+      right: -$height;
+      margin-top: -$height;
+      @include arrow('right', $height, $color);
+
+    }
+  }
+}
+
+.tooltip {
+  $tooltipBg: #333;
+
+  display: block;
+  z-index: 999;
+  position: fixed;
+  left: -100%;
+  padding: 6px;
+  margin: 0;
+  font-size: 1rem;
+  border-radius: 2px;
+  color: #ddd;
+  background: $tooltipBg;
+  opacity: 0;
+  transition: opacity .3s ease;
+
+  @include tooltip-arrow('bottom-center', 4px, $tooltipBg);
+}
+
+.tooltip--visible {
+  opacity: 1;
+}
