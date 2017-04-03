@@ -1,0 +1,2 @@
+.tooltip{display:block;z-index:999;position:fixed;left:-100%;padding:6px;margin:0;font-size:1rem;border-radius:2px;color:#ddd;background:#333;opacity:0;-webkit-transition:opacity .3s ease;transition:opacity .3s ease}.tooltip:before{content:"";display:block;position:absolute;bottom:-4px;left:50%;margin-left:-4px;border:4px solid transparent;border-top-color:#333;border-bottom-width:0}.tooltip--visible{opacity:1}
+/*# sourceMappingURL=tooltip.css.map */
