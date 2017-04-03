@@ -2,12 +2,23 @@
   "name": "baza-tooltips",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/tooltip.js",
+  "jsnext:main": "src/tooltip.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "scss": "node-sass src/tooltip.scss dist/tooltip.css --output-style compressed --source-map true",
+    "autoprefixer": "postcss -u autoprefixer --autoprefixer.browsers \"> 5%, ie 9\" -r dist/tooltip.css",
+    "lint": "eslint --quiet src/*.js",
+    "rollup": "rollup -c",
+    "build:css": "npm run scss && npm run autoprefixer",
+    "build:js": "npm run lint && npm run rollup",
+    "watch:scss": "onchange \"src/**/*.scss\" -v -- npm run build:css",
+    "watch:js": "onchange \"src/**/*.js\" -v -- npm run build:js",
+    "watch:all": "parallelshell -v -w \"npm run watch:scss\" \"npm run watch:js\"",
+    "serve": "browser-sync start --config bs-config.js",
+    "start": "parallelshell -v -w \"npm run watch:all\" \"npm run serve\""
   },
   "repository": {
     "type": "git",
@@ -15,6 +26,23 @@
   },
   "author": "bezet",
   "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^6.7.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "babel-preset-latest": "^6.24.0",
+    "browser-sync": "^2.18.6",
+    "eslint": "^3.14.0",
+    "node-sass": "^4.2.0",
+    "onchange": "^3.2.1",
+    "parallelshell": "^2.0.0",
+    "postcss-cli": "^2.6.0",
+    "rollup": "^0.41.4",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-uglify": "^1.0.1"
+  },
   "bugs": {
     "url": "https://github.com/bezet/baza-tooltips/issues"
   },
