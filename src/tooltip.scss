@@ -26,43 +26,52 @@
     position: absolute;
 
     @if $position == 'top-center' {
+      bottom: unset;
+      right: unset;
       top: -$height;
       left: 50%;
       margin-left: -$height;
       @include arrow('up', $height, $color);
 
     } @else if $position == 'bottom-center' {
+      top: unset;
+      right: unset;
       bottom: -$height;
       left: 50%;
       margin-left: -$height;
       @include arrow('down', $height, $color);
 
     } @else if $position == 'left-center' {
+      bottom: unset;
+      right: unset;
       top: 50%;
       left: -$height;
       margin-top: -$height;
       @include arrow('left', $height, $color);
 
     } @else if $position == 'right-center' {
+      bottom: unset;
+      left: unset;
       top: 50%;
       right: -$height;
       margin-top: -$height;
       @include arrow('right', $height, $color);
-
     }
   }
 }
 
+$tooltipBg: #333;
 .tooltip {
-  $tooltipBg: #333;
 
   display: block;
   z-index: 999;
   position: fixed;
   left: -100%;
-  padding: 6px;
+  padding: .5em;
   margin: 0;
   font-size: 1rem;
+  line-height: 1;
+  font-family: sans-serif;
   border-radius: 2px;
   color: #ddd;
   background: $tooltipBg;
@@ -70,6 +79,10 @@
   transition: opacity .3s ease;
 
   @include tooltip-arrow('bottom-center', 4px, $tooltipBg);
+}
+
+.tooltip--top-arrow {
+  @include tooltip-arrow('top-center', 4px, $tooltipBg);
 }
 
 .tooltip--visible {
