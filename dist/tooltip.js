@@ -104,10 +104,12 @@ var Tooltip = function () {
         if (element.hasAttribute('title')) {
           var title = element.getAttribute('title');
 
-          element.setAttribute('title', '');
-          element.dataset.title = title;
-
-          _this.bindEvents(element);
+          // TODO: Provide WAI-ARIA support
+          if (title !== '') {
+            element.setAttribute('title', '');
+            element.dataset.title = title;
+            _this.bindEvents(element);
+          }
         }
       });
     }
@@ -117,18 +119,24 @@ var Tooltip = function () {
       var tooltippedElement = element;
       var tooltip = this.tooltip;
 
+      // const inViewport = ( elementRect ) => {
+      //   return elementRect.top > 40;
+      // };
+
       var calcXShift = function calcXShift(event) {
         return event.pageX - tooltip.clientWidth / 2;
       };
 
       var calcYShift = function calcYShift(event) {
-        var tooltippedElementRects = tooltippedElement.getClientRects();
+        var tooltippedElementRect = tooltippedElement.getBoundingClientRect();
         var tooltippedElementStyles = window.getComputedStyle(tooltippedElement);
+
+        // console.log( tooltippedElementRect );
 
         var yShift = -(tooltip.clientHeight + 10);
 
         if (tooltippedElementStyles.getPropertyValue('display') !== 'block') {
-          yShift += tooltippedElementRects[0].top;
+          yShift += tooltippedElementRect.top;
         } else {
           yShift += event.pageY;
         }
