@@ -20,10 +20,12 @@ class Tooltip {
       if ( element.hasAttribute( 'title' ) ) {
         const title = element.getAttribute( 'title' );
 
-        element.setAttribute( 'title', '' );
-        element.dataset.title = title;
-
-        this.bindEvents( element );
+        // TODO: Provide WAI-ARIA support
+        if ( title !== '' ) {
+          element.setAttribute( 'title', '' );
+          element.dataset.title = title;
+          this.bindEvents( element );
+        }
       }
     } );
   }
@@ -32,18 +34,24 @@ class Tooltip {
     const tooltippedElement = element;
     const tooltip = this.tooltip;
 
+    // const inViewport = ( elementRect ) => {
+    //   return elementRect.top > 40;
+    // };
+
     const calcXShift = ( event ) => {
       return event.pageX - ( tooltip.clientWidth / 2 );
     };
 
     const calcYShift = ( event ) => {
-      const tooltippedElementRects = tooltippedElement.getClientRects();
+      const tooltippedElementRect = tooltippedElement.getBoundingClientRect();
       const tooltippedElementStyles = window.getComputedStyle( tooltippedElement );
+
+      // console.log( tooltippedElementRect );
 
       let yShift = -( tooltip.clientHeight + 10 );
 
       if ( tooltippedElementStyles.getPropertyValue( 'display' ) !== 'block' ) {
-        yShift += tooltippedElementRects[ 0 ].top;
+        yShift += tooltippedElementRect.top;
       } else {
         yShift += event.pageY;
       }
