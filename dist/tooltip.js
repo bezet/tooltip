@@ -108,31 +108,39 @@ var Tooltip = function () {
           if (title !== '') {
             element.setAttribute('title', '');
             element.dataset.title = title;
-            _this.bindEvents(element);
+            _this.bindElementEvents(element);
           }
         }
       });
     }
   }, {
-    key: 'bindEvents',
-    value: function bindEvents(element) {
+    key: 'bindElementEvents',
+    value: function bindElementEvents(element) {
       var tooltippedElement = element;
       var tooltip = this.tooltip;
+      var tooltippedElementRect = tooltippedElement.getBoundingClientRect();
+      var tooltippedElementStyles = window.getComputedStyle(tooltippedElement);
 
-      // const inViewport = ( elementRect ) => {
-      //   return elementRect.top > 40;
+      // const tooltipInViewport = ( elementRectTop ) => {
+      //   return elementRectTop > 40;
       // };
 
       var calcXShift = function calcXShift(event) {
-        return event.pageX - tooltip.clientWidth / 2;
+        var xShift = event.pageX;
+        xShift -= tooltip.clientWidth / 2;
+
+        // if ( tooltippedElementRect.left > ( tooltip.clientWidth - tooltippedElementRect.width ) ) {
+        //   xShift -= ( tooltip.clientWidth / 2 );
+        // }
+        //
+        // if ( tooltippedElementRect.right < ( tooltip.clientWidth - tooltippedElementRect.width ) ) {
+        //   xShift += ( tooltip.clientWidth / 2 );
+        // }
+
+        return xShift;
       };
 
       var calcYShift = function calcYShift(event) {
-        var tooltippedElementRect = tooltippedElement.getBoundingClientRect();
-        var tooltippedElementStyles = window.getComputedStyle(tooltippedElement);
-
-        // console.log( tooltippedElementRect );
-
         var yShift = -(tooltip.clientHeight + 10);
 
         if (tooltippedElementStyles.getPropertyValue('display') !== 'block') {
@@ -144,23 +152,31 @@ var Tooltip = function () {
         return yShift;
       };
 
-      tooltippedElement.addEventListener('mouseover', function (event) {
-        tooltip.textContent = tooltippedElement.dataset.title;
-
+      var setTooltipPosition = function setTooltipPosition(event) {
         tooltip.style.top = calcYShift(event) + 'px';
         tooltip.style.left = calcXShift(event) + 'px';
+      };
 
-        tooltip.classList.add('tooltip--visible');
+      var toggleTooltipVisibility = function toggleTooltipVisibility() {
+        var visibilityClass = 'tooltip--visible';
+        tooltip.classList.toggle(visibilityClass);
+        if (!tooltip.classList.contains(visibilityClass)) {
+          tooltip.removeAttribute('style');
+        }
+      };
+
+      tooltippedElement.addEventListener('mouseover', function (event) {
+        tooltip.textContent = tooltippedElement.dataset.title;
+        setTooltipPosition(event);
+        toggleTooltipVisibility();
       });
 
       tooltippedElement.addEventListener('mousemove', function (event) {
-        tooltip.style.top = calcYShift(event) + 'px';
-        tooltip.style.left = calcXShift(event) + 'px';
+        setTooltipPosition(event);
       });
 
       tooltippedElement.addEventListener('mouseleave', function () {
-        tooltip.classList.remove('tooltip--visible');
-        tooltip.removeAttribute('style');
+        toggleTooltipVisibility();
       });
     }
   }]);
