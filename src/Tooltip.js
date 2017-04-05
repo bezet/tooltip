@@ -24,30 +24,38 @@ class Tooltip {
         if ( title !== '' ) {
           element.setAttribute( 'title', '' );
           element.dataset.title = title;
-          this.bindEvents( element );
+          this.bindElementEvents( element );
         }
       }
     } );
   }
 
-  bindEvents( element ) {
+  bindElementEvents( element ) {
     const tooltippedElement = element;
     const tooltip = this.tooltip;
+    const tooltippedElementRect = tooltippedElement.getBoundingClientRect();
+    const tooltippedElementStyles = window.getComputedStyle( tooltippedElement );
 
-    // const inViewport = ( elementRect ) => {
-    //   return elementRect.top > 40;
+    // const tooltipInViewport = ( elementRectTop ) => {
+    //   return elementRectTop > 40;
     // };
 
     const calcXShift = ( event ) => {
-      return event.pageX - ( tooltip.clientWidth / 2 );
+      let xShift = event.pageX;
+      xShift -= ( tooltip.clientWidth / 2 );
+
+      // if ( tooltippedElementRect.left > ( tooltip.clientWidth - tooltippedElementRect.width ) ) {
+      //   xShift -= ( tooltip.clientWidth / 2 );
+      // }
+      //
+      // if ( tooltippedElementRect.right < ( tooltip.clientWidth - tooltippedElementRect.width ) ) {
+      //   xShift += ( tooltip.clientWidth / 2 );
+      // }
+
+      return xShift;
     };
 
     const calcYShift = ( event ) => {
-      const tooltippedElementRect = tooltippedElement.getBoundingClientRect();
-      const tooltippedElementStyles = window.getComputedStyle( tooltippedElement );
-
-      // console.log( tooltippedElementRect );
-
       let yShift = -( tooltip.clientHeight + 10 );
 
       if ( tooltippedElementStyles.getPropertyValue( 'display' ) !== 'block' ) {
@@ -59,23 +67,31 @@ class Tooltip {
       return yShift;
     };
 
-    tooltippedElement.addEventListener( 'mouseover', ( event ) => {
-      tooltip.textContent = tooltippedElement.dataset.title;
-
+    const setTooltipPosition = ( event ) => {
       tooltip.style.top = `${calcYShift( event )}px`;
       tooltip.style.left = `${calcXShift( event )}px`;
+    };
 
-      tooltip.classList.add( 'tooltip--visible' );
+    const toggleTooltipVisibility = () => {
+      const visibilityClass = 'tooltip--visible';
+      tooltip.classList.toggle( visibilityClass );
+      if ( !tooltip.classList.contains( visibilityClass ) ) {
+        tooltip.removeAttribute( 'style' );
+      }
+    };
+
+    tooltippedElement.addEventListener( 'mouseover', ( event ) => {
+      tooltip.textContent = tooltippedElement.dataset.title;
+      setTooltipPosition( event );
+      toggleTooltipVisibility();
     } );
 
     tooltippedElement.addEventListener( 'mousemove', ( event ) => {
-      tooltip.style.top = `${calcYShift( event )}px`;
-      tooltip.style.left = `${calcXShift( event )}px`;
+      setTooltipPosition( event );
     } );
 
     tooltippedElement.addEventListener( 'mouseleave', () => {
-      tooltip.classList.remove( 'tooltip--visible' );
-      tooltip.removeAttribute( 'style' );
+      toggleTooltipVisibility();
     } );
   }
 }
