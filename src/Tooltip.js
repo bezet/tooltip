@@ -24,45 +24,91 @@ class Tooltip {
         if ( title !== '' ) {
           element.setAttribute( 'title', '' );
           element.dataset.title = title;
+          element.dataset.position = this.determineTooltipPosition( element, this.getTooltipDimensions( title ) );
           this.bindElementEvents( element );
         }
       }
     } );
   }
 
+  getElementsPositionInViewport( element ) {
+    const elementsPosition = element;
+    return elementsPosition;
+  }
+
+  getTooltipDimensions( tooltipText ) {
+    const tooltipDimensions = [];
+
+    this.tooltip.textContent = tooltipText;
+
+    tooltipDimensions[ 0 ] = this.tooltip.offsetWidth;
+    tooltipDimensions[ 1 ] = this.tooltip.offsetHeight;
+
+    this.tooltip.textContent = '';
+
+    return tooltipDimensions;
+  }
+
+  determineTooltipPosition( element, tooltipDimensions ) {
+    let tooltipPosition = tooltipDimensions;
+
+    tooltipPosition = 'top-center';
+
+    return tooltipPosition;
+  }
+
   bindElementEvents( element ) {
     const tooltippedElement = element;
-    const tooltip = this.tooltip;
     const tooltippedElementRect = tooltippedElement.getBoundingClientRect();
-    const tooltippedElementStyles = window.getComputedStyle( tooltippedElement );
-
-    // const tooltipInViewport = ( elementRectTop ) => {
-    //   return elementRectTop > 40;
-    // };
+    // const tooltippedElementStyles = window.getComputedStyle( tooltippedElement );
+    const tooltip = this.tooltip;
+    const tooltipPosition = tooltippedElement.dataset.position.split( '-' );
 
     const calcXShift = ( event ) => {
-      let xShift = event.pageX;
-      xShift -= ( tooltip.clientWidth / 2 );
+      // if ( this.options.floating ) {
+        // let xShift = event.pageX;
+        // xShift -= ( tooltip.clientWidth / 2 );
+        // xShift -= tooltip.clientWidth;
+      // } else {}
 
-      // if ( tooltippedElementRect.left > ( tooltip.clientWidth - tooltippedElementRect.width ) ) {
-      //   xShift -= ( tooltip.clientWidth / 2 );
-      // }
-      //
-      // if ( tooltippedElementRect.right < ( tooltip.clientWidth - tooltippedElementRect.width ) ) {
-      //   xShift += ( tooltip.clientWidth / 2 );
-      // }
+      console.log( event );
+
+      // [TOP/BOTTOM]-LEFT case
+      let xShift = tooltippedElementRect.left;
+
+      if ( tooltipPosition[ 1 ] === 'center' ) {
+        // [TOP/BOTTOM]-CENTER case
+        xShift -= ( tooltip.clientWidth - tooltippedElementRect.width ) / 2;
+
+      } else if ( tooltipPosition[ 1 ] === 'right' ) {
+        // [TOP/BOTTOM]-RIGHT case
+        xShift += tooltippedElementRect.width - tooltip.clientWidth;
+      }
 
       return xShift;
     };
 
     const calcYShift = ( event ) => {
-      let yShift = -( tooltip.clientHeight + 10 );
+      // if ( this.options.floating ) {
+      //   yShift += event.pageY;
+      // }
 
-      if ( tooltippedElementStyles.getPropertyValue( 'display' ) !== 'block' ) {
-        yShift += tooltippedElementRect.top;
-      } else {
-        yShift += event.pageY;
+      let yShift = 0;
+
+      if ( tooltipPosition[ 0 ] === 'top' ) {
+        // TOP-[LEFT/CENTER/RIGHT] case
+        yShift = tooltippedElementRect.top - tooltip.clientHeight - 10;
+
+      } else if ( tooltipPosition[ 0 ] === 'bottom' ) {
+        // BOTTOM-[LEFT/CENTER/RIGHT] case
+        yShift = tooltippedElementRect.bottom + 10;
       }
+
+      console.log( event );
+
+      // if ( tooltippedElementStyles.getPropertyValue( 'display' ) !== 'block' ) {
+      //   yShift += tooltippedElementRect.top;
+      // }
 
       return yShift;
     };
@@ -80,19 +126,25 @@ class Tooltip {
       }
     };
 
-    tooltippedElement.addEventListener( 'mouseover', ( event ) => {
+    const mouseEnterHandler = ( event ) => {
       tooltip.textContent = tooltippedElement.dataset.title;
       setTooltipPosition( event );
       toggleTooltipVisibility();
-    } );
+    };
 
-    tooltippedElement.addEventListener( 'mousemove', ( event ) => {
+    const mouseMoveHandler = ( event ) => {
       setTooltipPosition( event );
-    } );
+    };
 
-    tooltippedElement.addEventListener( 'mouseleave', () => {
+    const mouseLeaveHandler = () => {
       toggleTooltipVisibility();
-    } );
+    };
+
+    tooltippedElement.addEventListener( 'mouseenter', mouseEnterHandler );
+    tooltippedElement.addEventListener( 'focus', mouseEnterHandler );
+    tooltippedElement.addEventListener( 'mousemove', mouseMoveHandler );
+    tooltippedElement.addEventListener( 'mouseleave', mouseLeaveHandler );
+    tooltippedElement.addEventListener( 'blur', mouseLeaveHandler );
   }
 }
 
