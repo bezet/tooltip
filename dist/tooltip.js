@@ -74,6 +74,8 @@ var toConsumableArray = function (arr) {
   }
 };
 
+/* eslint no-unused-vars: 0 */
+
 var Tooltip = function () {
   function Tooltip() {
     var tooltipSelector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'a';
@@ -108,59 +110,66 @@ var Tooltip = function () {
           if (title !== '') {
             element.setAttribute('title', '');
             element.dataset.title = title;
-            element.dataset.position = _this.determineTooltipPosition(element, _this.getTooltipDimensions(title));
+            element.dataset.position = _this.getTooltipPosition(element, _this.getTooltipDimensions(title));
             _this.bindElementEvents(element);
           }
         }
       });
     }
   }, {
-    key: 'getElementsPositionInViewport',
-    value: function getElementsPositionInViewport(element) {
-      var elementsPosition = element;
-      return elementsPosition;
-    }
-  }, {
     key: 'getTooltipDimensions',
     value: function getTooltipDimensions(tooltipText) {
       var tooltipDimensions = [];
-
       this.tooltip.textContent = tooltipText;
-
       tooltipDimensions[0] = this.tooltip.offsetWidth;
       tooltipDimensions[1] = this.tooltip.offsetHeight;
-
       this.tooltip.textContent = '';
 
       return tooltipDimensions;
     }
   }, {
-    key: 'determineTooltipPosition',
-    value: function determineTooltipPosition(element, tooltipDimensions) {
-      var tooltipPosition = tooltipDimensions;
+    key: 'getVerticalTooltipPosition',
+    value: function getVerticalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
+      var verticalTooltipPosition = 'top';
+      if (tooltippedElementRect.top < tooltippedElementRect.height + tooltipDimensions[1]) {
+        verticalTooltipPosition = 'bottom';
+      }
+      return verticalTooltipPosition;
+    }
+  }, {
+    key: 'getHorizontalTooltipPosition',
+    value: function getHorizontalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
+      var horizontalTooltipPosition = 'center';
 
-      tooltipPosition = 'top-center';
+      if (tooltippedElementRect.left < tooltipDimensions[0] / 2 - tooltippedElementRect.width / 2) {
+        horizontalTooltipPosition = 'left';
+      }
 
-      return tooltipPosition;
+      // if ( tooltippedElementRect.right ) {
+      //   tooltipPosition[ 1 ] = 'right';
+      // }
+
+      return horizontalTooltipPosition;
+    }
+  }, {
+    key: 'getTooltipPosition',
+    value: function getTooltipPosition(tooltippedElement, tooltipDimensions) {
+      var tooltippedElementRect = tooltippedElement.getBoundingClientRect();
+      var tooltipPosition = [];
+      tooltipPosition[0] = this.getVerticalTooltipPosition(tooltippedElementRect, tooltipDimensions);
+      tooltipPosition[1] = this.getHorizontalTooltipPosition(tooltippedElementRect, tooltipDimensions);
+      return tooltipPosition.join('-');
     }
   }, {
     key: 'bindElementEvents',
     value: function bindElementEvents(element) {
       var tooltippedElement = element;
       var tooltippedElementRect = tooltippedElement.getBoundingClientRect();
-      // const tooltippedElementStyles = window.getComputedStyle( tooltippedElement );
+
       var tooltip = this.tooltip;
       var tooltipPosition = tooltippedElement.dataset.position.split('-');
 
       var calcXShift = function calcXShift(event) {
-        // if ( this.options.floating ) {
-        // let xShift = event.pageX;
-        // xShift -= ( tooltip.clientWidth / 2 );
-        // xShift -= tooltip.clientWidth;
-        // } else {}
-
-        console.log(event);
-
         // [TOP/BOTTOM]-LEFT case
         var xShift = tooltippedElementRect.left;
 
@@ -176,10 +185,6 @@ var Tooltip = function () {
       };
 
       var calcYShift = function calcYShift(event) {
-        // if ( this.options.floating ) {
-        //   yShift += event.pageY;
-        // }
-
         var yShift = 0;
 
         if (tooltipPosition[0] === 'top') {
@@ -189,12 +194,6 @@ var Tooltip = function () {
           // BOTTOM-[LEFT/CENTER/RIGHT] case
           yShift = tooltippedElementRect.bottom + 10;
         }
-
-        console.log(event);
-
-        // if ( tooltippedElementStyles.getPropertyValue( 'display' ) !== 'block' ) {
-        //   yShift += tooltippedElementRect.top;
-        // }
 
         return yShift;
       };
@@ -218,19 +217,20 @@ var Tooltip = function () {
         toggleTooltipVisibility();
       };
 
-      var mouseMoveHandler = function mouseMoveHandler(event) {
-        setTooltipPosition(event);
-      };
-
       var mouseLeaveHandler = function mouseLeaveHandler() {
         toggleTooltipVisibility();
       };
 
+      var windowResizeHandler = function windowResizeHandler() {
+        tooltippedElementRect = tooltippedElement.getBoundingClientRect();
+      };
+
       tooltippedElement.addEventListener('mouseenter', mouseEnterHandler);
       tooltippedElement.addEventListener('focus', mouseEnterHandler);
-      tooltippedElement.addEventListener('mousemove', mouseMoveHandler);
       tooltippedElement.addEventListener('mouseleave', mouseLeaveHandler);
       tooltippedElement.addEventListener('blur', mouseLeaveHandler);
+
+      window.addEventListener('resize', windowResizeHandler);
     }
   }]);
   return Tooltip;
