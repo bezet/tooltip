@@ -1,3 +1,5 @@
+/* eslint no-unused-vars: 0 */
+
 class Tooltip {
   constructor( tooltipSelector = 'a' ) {
     this.tooltippedElements = document.querySelectorAll( tooltipSelector );
@@ -24,55 +26,61 @@ class Tooltip {
         if ( title !== '' ) {
           element.setAttribute( 'title', '' );
           element.dataset.title = title;
-          element.dataset.position = this.determineTooltipPosition( element, this.getTooltipDimensions( title ) );
+          element.dataset.position = this.getTooltipPosition( element, this.getTooltipDimensions( title ) );
           this.bindElementEvents( element );
         }
       }
     } );
   }
 
-  getElementsPositionInViewport( element ) {
-    const elementsPosition = element;
-    return elementsPosition;
-  }
-
   getTooltipDimensions( tooltipText ) {
     const tooltipDimensions = [];
-
     this.tooltip.textContent = tooltipText;
-
     tooltipDimensions[ 0 ] = this.tooltip.offsetWidth;
     tooltipDimensions[ 1 ] = this.tooltip.offsetHeight;
-
     this.tooltip.textContent = '';
 
     return tooltipDimensions;
   }
 
-  determineTooltipPosition( element, tooltipDimensions ) {
-    let tooltipPosition = tooltipDimensions;
+  getVerticalTooltipPosition( tooltippedElementRect, tooltipDimensions ) {
+    let verticalTooltipPosition = 'top';
+    if ( tooltippedElementRect.top < ( tooltippedElementRect.height + tooltipDimensions[ 1 ] ) ) {
+      verticalTooltipPosition = 'bottom';
+    }
+    return verticalTooltipPosition;
+  }
 
-    tooltipPosition = 'top-center';
+  getHorizontalTooltipPosition( tooltippedElementRect, tooltipDimensions ) {
+    let horizontalTooltipPosition = 'center';
 
-    return tooltipPosition;
+    if ( tooltippedElementRect.left < ( ( tooltipDimensions[ 0 ] / 2 ) - ( tooltippedElementRect.width / 2 ) ) ) {
+      horizontalTooltipPosition = 'left';
+    }
+
+    // if ( tooltippedElementRect.right ) {
+    //   tooltipPosition[ 1 ] = 'right';
+    // }
+
+    return horizontalTooltipPosition;
+  }
+
+  getTooltipPosition( tooltippedElement, tooltipDimensions ) {
+    const tooltippedElementRect = tooltippedElement.getBoundingClientRect();
+    const tooltipPosition = [];
+    tooltipPosition[ 0 ] = this.getVerticalTooltipPosition( tooltippedElementRect, tooltipDimensions );
+    tooltipPosition[ 1 ] = this.getHorizontalTooltipPosition( tooltippedElementRect, tooltipDimensions );
+    return tooltipPosition.join( '-' );
   }
 
   bindElementEvents( element ) {
     const tooltippedElement = element;
-    const tooltippedElementRect = tooltippedElement.getBoundingClientRect();
-    // const tooltippedElementStyles = window.getComputedStyle( tooltippedElement );
+    let tooltippedElementRect = tooltippedElement.getBoundingClientRect();
+
     const tooltip = this.tooltip;
     const tooltipPosition = tooltippedElement.dataset.position.split( '-' );
 
     const calcXShift = ( event ) => {
-      // if ( this.options.floating ) {
-        // let xShift = event.pageX;
-        // xShift -= ( tooltip.clientWidth / 2 );
-        // xShift -= tooltip.clientWidth;
-      // } else {}
-
-      console.log( event );
-
       // [TOP/BOTTOM]-LEFT case
       let xShift = tooltippedElementRect.left;
 
@@ -89,10 +97,6 @@ class Tooltip {
     };
 
     const calcYShift = ( event ) => {
-      // if ( this.options.floating ) {
-      //   yShift += event.pageY;
-      // }
-
       let yShift = 0;
 
       if ( tooltipPosition[ 0 ] === 'top' ) {
@@ -103,12 +107,6 @@ class Tooltip {
         // BOTTOM-[LEFT/CENTER/RIGHT] case
         yShift = tooltippedElementRect.bottom + 10;
       }
-
-      console.log( event );
-
-      // if ( tooltippedElementStyles.getPropertyValue( 'display' ) !== 'block' ) {
-      //   yShift += tooltippedElementRect.top;
-      // }
 
       return yShift;
     };
@@ -132,19 +130,20 @@ class Tooltip {
       toggleTooltipVisibility();
     };
 
-    const mouseMoveHandler = ( event ) => {
-      setTooltipPosition( event );
-    };
-
     const mouseLeaveHandler = () => {
       toggleTooltipVisibility();
     };
 
+    const windowResizeHandler = () => {
+      tooltippedElementRect = tooltippedElement.getBoundingClientRect();
+    };
+
     tooltippedElement.addEventListener( 'mouseenter', mouseEnterHandler );
     tooltippedElement.addEventListener( 'focus', mouseEnterHandler );
-    tooltippedElement.addEventListener( 'mousemove', mouseMoveHandler );
     tooltippedElement.addEventListener( 'mouseleave', mouseLeaveHandler );
     tooltippedElement.addEventListener( 'blur', mouseLeaveHandler );
+
+    window.addEventListener( 'resize', windowResizeHandler );
   }
 }
 
