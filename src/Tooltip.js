@@ -19,13 +19,21 @@ class Tooltip {
 
   copyLabels() {
     [ ...this.tooltippedElements ].forEach( ( element ) => {
-      if ( element.hasAttribute( 'title' ) ) {
-        const title = element.getAttribute( 'title' );
-
+      if ( element.hasAttribute( 'title' ) || element.hasAttribute( 'data-title' ) ) {
         // TODO: Provide WAI-ARIA support
-        if ( title !== '' ) {
+
+        let title = '';
+
+        if ( element.hasAttribute( 'title' ) && element.getAttribute( 'title' ) !== '' ) {
+          title = element.getAttribute( 'title' );
           element.setAttribute( 'title', '' );
           element.dataset.title = title;
+
+        } else if ( element.hasAttribute( 'data-title' ) && element.dataset.title !== '' ) {
+          title = element.dataset.title;
+        }
+
+        if ( element.dataset.title !== '' ) {
           element.dataset.position = this.getTooltipPosition( element, this.getTooltipDimensions( title ) );
           this.bindElementEvents( element );
         }
