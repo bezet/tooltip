@@ -132,14 +132,25 @@ class Tooltip {
       }
     };
 
+    const setTooltipArrowClass = () => {
+      tooltip.classList.add( `tooltip--${element.dataset.position}` );
+    };
+
+    const removeTooltipArrowClass = () => {
+      tooltip.removeAttribute( 'class' );
+      tooltip.classList.add( 'tooltip' );
+    };
+
     const mouseEnterHandler = ( event ) => {
       tooltip.textContent = tooltippedElement.dataset.title;
       setTooltipPosition( event );
+      setTooltipArrowClass();
       toggleTooltipVisibility();
     };
 
     const mouseLeaveHandler = () => {
       toggleTooltipVisibility();
+      removeTooltipArrowClass();
     };
 
     const windowResizeHandler = () => {
