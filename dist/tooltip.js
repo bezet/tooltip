@@ -103,13 +103,20 @@ var Tooltip = function () {
       var _this = this;
 
       [].concat(toConsumableArray(this.tooltippedElements)).forEach(function (element) {
-        if (element.hasAttribute('title')) {
-          var title = element.getAttribute('title');
-
+        if (element.hasAttribute('title') || element.hasAttribute('data-title')) {
           // TODO: Provide WAI-ARIA support
-          if (title !== '') {
+
+          var title = '';
+
+          if (element.hasAttribute('title') && element.getAttribute('title') !== '') {
+            title = element.getAttribute('title');
             element.setAttribute('title', '');
             element.dataset.title = title;
+          } else if (element.hasAttribute('data-title') && element.dataset.title !== '') {
+            title = element.dataset.title;
+          }
+
+          if (element.dataset.title !== '') {
             element.dataset.position = _this.getTooltipPosition(element, _this.getTooltipDimensions(title));
             _this.bindElementEvents(element);
           }
@@ -211,14 +218,25 @@ var Tooltip = function () {
         }
       };
 
+      var setTooltipArrowClass = function setTooltipArrowClass() {
+        tooltip.classList.add('tooltip--' + element.dataset.position);
+      };
+
+      var removeTooltipArrowClass = function removeTooltipArrowClass() {
+        tooltip.removeAttribute('class');
+        tooltip.classList.add('tooltip');
+      };
+
       var mouseEnterHandler = function mouseEnterHandler(event) {
         tooltip.textContent = tooltippedElement.dataset.title;
         setTooltipPosition(event);
+        setTooltipArrowClass();
         toggleTooltipVisibility();
       };
 
       var mouseLeaveHandler = function mouseLeaveHandler() {
         toggleTooltipVisibility();
+        removeTooltipArrowClass();
       };
 
       var windowResizeHandler = function windowResizeHandler() {
