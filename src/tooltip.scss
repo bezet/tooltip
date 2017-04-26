@@ -89,7 +89,7 @@
 }
 
 $tooltipBg: #333;
-$tooltipHeight: 4px;
+$tooltipArrowHeight: 4px;
 
 .tooltip {
 
@@ -108,27 +108,27 @@ $tooltipHeight: 4px;
   opacity: 0;
   transition: opacity .3s ease;
 
-  @include tooltip-arrow('bottom-center', $tooltipHeight, $tooltipBg);
+  @include tooltip-arrow('bottom-center', $tooltipArrowHeight, $tooltipBg);
 }
 
 .tooltip--top-left {
-  @include tooltip-arrow('bottom-left', $tooltipHeight, $tooltipBg);
+  @include tooltip-arrow('bottom-left', $tooltipArrowHeight, $tooltipBg);
 }
 
 .tooltip--top-right {
-  @include tooltip-arrow('bottom-right', $tooltipHeight, $tooltipBg);
+  @include tooltip-arrow('bottom-right', $tooltipArrowHeight, $tooltipBg);
 }
 
 .tooltip--bottom-center {
-  @include tooltip-arrow('top-center', $tooltipHeight, $tooltipBg);
+  @include tooltip-arrow('top-center', $tooltipArrowHeight, $tooltipBg);
 }
 
 .tooltip--bottom-left {
-  @include tooltip-arrow('top-left', $tooltipHeight, $tooltipBg);
+  @include tooltip-arrow('top-left', $tooltipArrowHeight, $tooltipBg);
 }
 
 .tooltip--bottom-right {
-  @include tooltip-arrow('top-right', $tooltipHeight, $tooltipBg);
+  @include tooltip-arrow('top-right', $tooltipArrowHeight, $tooltipBg);
 }
 
 .tooltip--visible {
