@@ -78,8 +78,6 @@ var toConsumableArray = function (arr) {
   }
 };
 
-/* eslint no-unused-vars: 0 */
-
 var Tooltips = function () {
   function Tooltips() {
     var tooltipSelector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'a';
