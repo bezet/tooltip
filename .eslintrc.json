@@ -6,13 +6,16 @@
     },
     "parserOptions": {
         "ecmaFeatures": {
-            "experimentalObjectRestSpread": true,
-            "jsx": true
+            "experimentalObjectRestSpread": true
         },
         "sourceType": "module"
     },
-    "extends": "airbnb",
+    "extends": "airbnb-base",
     "rules": {
-      "no-console": [ 0 ]
+      "no-console": [ 1 ],
+      "max-len": [1, 100],
+      "no-unused-vars": 1,
+      "no-param-reassign": 1,
+      "class-methods-use-this": 1
     }
 }
