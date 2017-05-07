@@ -1,4 +1,8 @@
-'use strict';
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.Tooltips = factory());
+}(this, (function () { 'use strict';
 
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -76,17 +80,17 @@ var toConsumableArray = function (arr) {
 
 /* eslint no-unused-vars: 0 */
 
-var Tooltip = function () {
-  function Tooltip() {
+var Tooltips = function () {
+  function Tooltips() {
     var tooltipSelector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'a';
-    classCallCheck(this, Tooltip);
+    classCallCheck(this, Tooltips);
 
     this.tooltippedElements = document.querySelectorAll(tooltipSelector);
     this.tooltip = null;
     this.createTooltip();
   }
 
-  createClass(Tooltip, [{
+  createClass(Tooltips, [{
     key: 'createTooltip',
     value: function createTooltip() {
       var tooltipBox = document.createElement('span');
@@ -251,8 +255,10 @@ var Tooltip = function () {
       window.addEventListener('resize', windowResizeHandler);
     }
   }]);
-  return Tooltip;
+  return Tooltips;
 }();
 
-// let tooltip = new Tooltip();
-//# sourceMappingURL=tooltip.js.map
+return Tooltips;
+
+})));
+//# sourceMappingURL=Tooltips.js.map

@@ -4,8 +4,9 @@ import babel from 'rollup-plugin-babel';
 import uglify from 'rollup-plugin-uglify';
 
 export default {
-  entry: 'src/main.js',
-  format: 'cjs',
+  entry: 'src/Tooltips.js',
+  format: 'umd',
+  moduleName: 'Tooltips',
   plugins: [
     commonjs(),
     nodeResolve( { module: true, jsnext: true, main: true, browser: true } ),
@@ -13,6 +14,6 @@ export default {
       exclude: 'node_modules/**'
     } )
   ],
-  dest: 'dist/tooltip.js',
+  dest: 'dist/Tooltips.js',
   sourceMap: true
 };

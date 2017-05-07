@@ -1,6 +1,6 @@
 /* eslint no-unused-vars: 0 */
 
-class Tooltip {
+class Tooltips {
   constructor( tooltipSelector = 'a' ) {
     this.tooltippedElements = document.querySelectorAll( tooltipSelector );
     this.tooltip = null;
@@ -166,4 +166,4 @@ class Tooltip {
   }
 }
 
-export default Tooltip;
+export default Tooltips;
