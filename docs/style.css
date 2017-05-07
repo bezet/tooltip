@@ -1,0 +1,20 @@
+.wrapper {
+    width: 404px;
+    margin: 100px auto;
+}
+
+.anchor {
+    display: inline;
+    width: 300px;
+    border: 1px solid #000;
+}
+
+.anchor--right-aligned {
+  float: right;
+  width: initial;
+}
+
+.anchor--block {
+    display: block;
+    height: 100px;
+}
