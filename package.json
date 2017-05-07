@@ -2,8 +2,8 @@
   "name": "baza-tooltips",
   "version": "0.1.0",
   "description": "",
-  "main": "dist/tooltip.js",
-  "jsnext:main": "src/tooltip.js",
+  "main": "dist/Tooltips.js",
+  "jsnext:main": "src/Tooltips.js",
   "directories": {
     "doc": "docs"
   },
