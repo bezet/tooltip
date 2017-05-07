@@ -16,6 +16,8 @@
       "max-len": [1, 100],
       "no-unused-vars": 1,
       "no-param-reassign": 1,
-      "class-methods-use-this": 1
+      "class-methods-use-this": 1,
+      "comma-dangle": 0,
+      "arrow-body-style": [0, "never"]
     }
 }
