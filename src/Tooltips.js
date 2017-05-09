@@ -17,22 +17,32 @@ class Tooltips {
 
   copyLabels() {
     [...this.tooltippedElements].forEach((element) => {
-      if (element.hasAttribute('title') || element.hasAttribute('data-title')) {
-        // TODO: Provide WAI-ARIA support
+      const tooltippedElement = element;
 
+      if (tooltippedElement.hasAttribute('title') || tooltippedElement.hasAttribute('data-title')) {
+        // TODO: Provide WAI-ARIA support
         let title = '';
 
-        if (element.hasAttribute('title') && element.getAttribute('title') !== '') {
-          title = element.getAttribute('title');
-          element.setAttribute('title', '');
-          element.dataset.title = title;
-        } else if (element.hasAttribute('data-title') && element.dataset.title !== '') {
-          title = element.dataset.title;
+        if (
+          tooltippedElement.hasAttribute('title') &&
+          tooltippedElement.getAttribute('title') !== ''
+        ) {
+          title = tooltippedElement.getAttribute('title');
+          tooltippedElement.setAttribute('title', '');
+          tooltippedElement.dataset.title = title;
+        } else if (
+          tooltippedElement.hasAttribute('data-title') &&
+          tooltippedElement.dataset.title !== ''
+        ) {
+          title = tooltippedElement.dataset.title;
         }
 
-        if (element.dataset.title !== '') {
-          element.dataset.position = this.getTooltipPosition(element, this.getTooltipDimensions(title));
-          this.bindElementEvents(element);
+        if (tooltippedElement.dataset.title !== '') {
+          tooltippedElement.dataset.position = this.getTooltipPosition(
+            tooltippedElement,
+            this.getTooltipDimensions(title)
+          );
+          this.bindElementEvents(tooltippedElement);
         }
       }
     });
@@ -48,7 +58,7 @@ class Tooltips {
     return tooltipDimensions;
   }
 
-  getVerticalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
+  static getVerticalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
     let verticalTooltipPosition = 'top';
     if (tooltippedElementRect.top < (tooltippedElementRect.height + tooltipDimensions[1])) {
       verticalTooltipPosition = 'bottom';
@@ -56,7 +66,7 @@ class Tooltips {
     return verticalTooltipPosition;
   }
 
-  getHorizontalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
+  static getHorizontalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
     let horizontalTooltipPosition = 'center';
 
     if (tooltippedElementRect.left <
@@ -74,8 +84,14 @@ class Tooltips {
   getTooltipPosition(tooltippedElement, tooltipDimensions) {
     const tooltippedElementRect = tooltippedElement.getBoundingClientRect();
     const tooltipPosition = [];
-    tooltipPosition[0] = this.getVerticalTooltipPosition(tooltippedElementRect, tooltipDimensions);
-    tooltipPosition[1] = this.getHorizontalTooltipPosition(tooltippedElementRect, tooltipDimensions);
+    tooltipPosition[0] = this.getVerticalTooltipPosition(
+      tooltippedElementRect,
+      tooltipDimensions
+    );
+    tooltipPosition[1] = this.getHorizontalTooltipPosition(
+      tooltippedElementRect,
+      tooltipDimensions
+    );
     return tooltipPosition.join('-');
   }
 
@@ -86,7 +102,7 @@ class Tooltips {
     const tooltip = this.tooltip;
     const tooltipPosition = tooltippedElement.dataset.position.split('-');
 
-    const calcXShift = (event) => {
+    const calcXShift = () => {
       // [TOP/BOTTOM]-LEFT case
       let xShift = tooltippedElementRect.left;
 
@@ -101,7 +117,7 @@ class Tooltips {
       return xShift;
     };
 
-    const calcYShift = (event) => {
+    const calcYShift = () => {
       let yShift = 0;
 
       if (tooltipPosition[0] === 'top') {
