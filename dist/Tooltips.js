@@ -105,22 +105,27 @@ var Tooltips = function () {
       var _this = this;
 
       [].concat(toConsumableArray(this.tooltippedElements)).forEach(function (element) {
-        if (element.hasAttribute('title') || element.hasAttribute('data-title')) {
+        var tooltippedElement = element;
+        var title = '';
+
+        var elementHasNonEmptyAttribute = function elementHasNonEmptyAttribute(el, attribute) {
+          return tooltippedElement.hasAttribute(attribute) && tooltippedElement.getAttribute(attribute) !== '';
+        };
+
+        if (tooltippedElement.hasAttribute('title') || tooltippedElement.hasAttribute('data-title')) {
           // TODO: Provide WAI-ARIA support
 
-          var title = '';
-
-          if (element.hasAttribute('title') && element.getAttribute('title') !== '') {
-            title = element.getAttribute('title');
-            element.setAttribute('title', '');
-            element.dataset.title = title;
-          } else if (element.hasAttribute('data-title') && element.dataset.title !== '') {
-            title = element.dataset.title;
+          if (elementHasNonEmptyAttribute(tooltippedElement, 'title')) {
+            title = tooltippedElement.getAttribute('title');
+            tooltippedElement.setAttribute('title', '');
+            tooltippedElement.dataset.title = title;
+          } else if (elementHasNonEmptyAttribute(tooltippedElement, 'data-title')) {
+            title = tooltippedElement.dataset.title;
           }
 
-          if (element.dataset.title !== '') {
-            element.dataset.position = _this.getTooltipPosition(element, _this.getTooltipDimensions(title));
-            _this.bindElementEvents(element);
+          if (tooltippedElement.dataset.title !== '') {
+            tooltippedElement.dataset.position = _this.getTooltipPosition(tooltippedElement, _this.getTooltipDimensions(title));
+            _this.bindElementEvents(tooltippedElement);
           }
         }
       });
@@ -135,30 +140,6 @@ var Tooltips = function () {
       this.tooltip.textContent = '';
 
       return tooltipDimensions;
-    }
-  }, {
-    key: 'getVerticalTooltipPosition',
-    value: function getVerticalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
-      var verticalTooltipPosition = 'top';
-      if (tooltippedElementRect.top < tooltippedElementRect.height + tooltipDimensions[1]) {
-        verticalTooltipPosition = 'bottom';
-      }
-      return verticalTooltipPosition;
-    }
-  }, {
-    key: 'getHorizontalTooltipPosition',
-    value: function getHorizontalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
-      var horizontalTooltipPosition = 'center';
-
-      if (tooltippedElementRect.left < tooltipDimensions[0] / 2 - tooltippedElementRect.width / 2) {
-        horizontalTooltipPosition = 'left';
-      }
-
-      // if ( tooltippedElementRect.right ) {
-      //   tooltipPosition[ 1 ] = 'right';
-      // }
-
-      return horizontalTooltipPosition;
     }
   }, {
     key: 'getTooltipPosition',
@@ -178,7 +159,7 @@ var Tooltips = function () {
       var tooltip = this.tooltip;
       var tooltipPosition = tooltippedElement.dataset.position.split('-');
 
-      var calcXShift = function calcXShift(event) {
+      var calcXShift = function calcXShift() {
         // [TOP/BOTTOM]-LEFT case
         var xShift = tooltippedElementRect.left;
 
@@ -193,7 +174,7 @@ var Tooltips = function () {
         return xShift;
       };
 
-      var calcYShift = function calcYShift(event) {
+      var calcYShift = function calcYShift() {
         var yShift = 0;
 
         if (tooltipPosition[0] === 'top') {
@@ -251,6 +232,30 @@ var Tooltips = function () {
       tooltippedElement.addEventListener('blur', mouseLeaveHandler);
 
       window.addEventListener('resize', windowResizeHandler);
+    }
+  }], [{
+    key: 'getVerticalTooltipPosition',
+    value: function getVerticalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
+      var verticalTooltipPosition = 'top';
+      if (tooltippedElementRect.top < tooltippedElementRect.height + tooltipDimensions[1]) {
+        verticalTooltipPosition = 'bottom';
+      }
+      return verticalTooltipPosition;
+    }
+  }, {
+    key: 'getHorizontalTooltipPosition',
+    value: function getHorizontalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
+      var horizontalTooltipPosition = 'center';
+
+      if (tooltippedElementRect.left < tooltipDimensions[0] / 2 - tooltippedElementRect.width / 2) {
+        horizontalTooltipPosition = 'left';
+      }
+
+      // if ( tooltippedElementRect.right ) {
+      //   tooltipPosition[ 1 ] = 'right';
+      // }
+
+      return horizontalTooltipPosition;
     }
   }]);
   return Tooltips;
