@@ -12,37 +12,32 @@ class Tooltips {
 
     this.tooltip = tooltipBox;
 
-    this.copyLabels();
+    this.createTooltipData();
   }
 
-  copyLabels() {
+  createTooltipData() {
     [...this.tooltippedElements].forEach((element) => {
       const tooltippedElement = element;
-      let title = '';
 
-      const elementHasNonEmptyAttribute = (el, attribute) => {
-        return tooltippedElement.hasAttribute(attribute) &&
-        tooltippedElement.getAttribute(attribute) !== '';
+      const elHasNonEmptyAttr = (el, attr) => {
+        return el.hasAttribute(attr) &&
+               el.getAttribute(attr) !== '';
       };
 
-      if (tooltippedElement.hasAttribute('title') || tooltippedElement.hasAttribute('data-title')) {
-        // TODO: Provide WAI-ARIA support
+      // TODO: Provide WAI-ARIA support
 
-        if (elementHasNonEmptyAttribute(tooltippedElement, 'title')) {
-          title = tooltippedElement.getAttribute('title');
-          tooltippedElement.setAttribute('title', '');
-          tooltippedElement.dataset.title = title;
-        } else if (elementHasNonEmptyAttribute(tooltippedElement, 'data-title')) {
-          title = tooltippedElement.dataset.title;
-        }
+      if (elHasNonEmptyAttr(tooltippedElement, 'title')) {
+        tooltippedElement.dataset.tooltip = tooltippedElement.getAttribute('title');
+        tooltippedElement.setAttribute('title', '');
+      }
 
-        if (tooltippedElement.dataset.title !== '') {
-          tooltippedElement.dataset.position = this.getTooltipPosition(
-            tooltippedElement,
-            this.getTooltipDimensions(title)
-          );
-          this.bindElementEvents(tooltippedElement);
-        }
+      if (elHasNonEmptyAttr(tooltippedElement, 'data-tooltip')) {
+        tooltippedElement.dataset.position = this.getTooltipPosition(
+          tooltippedElement,
+          this.getTooltipDimensions(tooltippedElement.dataset.tooltip)
+        );
+
+        this.bindElementEvents(tooltippedElement);
       }
     });
   }
@@ -57,7 +52,7 @@ class Tooltips {
     return tooltipDimensions;
   }
 
-  static getVerticalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
+  getVerticalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
     let verticalTooltipPosition = 'top';
     if (tooltippedElementRect.top < (tooltippedElementRect.height + tooltipDimensions[1])) {
       verticalTooltipPosition = 'bottom';
@@ -65,7 +60,7 @@ class Tooltips {
     return verticalTooltipPosition;
   }
 
-  static getHorizontalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
+  getHorizontalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
     let horizontalTooltipPosition = 'center';
 
     if (tooltippedElementRect.left <
@@ -153,7 +148,7 @@ class Tooltips {
     };
 
     const mouseEnterHandler = (event) => {
-      tooltip.textContent = tooltippedElement.dataset.title;
+      tooltip.textContent = tooltippedElement.dataset.tooltip;
       setTooltipPosition(event);
       setTooltipArrowClass();
       toggleTooltipVisibility();
