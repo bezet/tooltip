@@ -18,22 +18,21 @@ class Tooltips {
   copyLabels() {
     [...this.tooltippedElements].forEach((element) => {
       const tooltippedElement = element;
+      let title = '';
+
+      const elementHasNonEmptyAttribute = (el, attribute) => {
+        return tooltippedElement.hasAttribute(attribute) &&
+        tooltippedElement.getAttribute(attribute) !== '';
+      };
 
       if (tooltippedElement.hasAttribute('title') || tooltippedElement.hasAttribute('data-title')) {
         // TODO: Provide WAI-ARIA support
-        let title = '';
 
-        if (
-          tooltippedElement.hasAttribute('title') &&
-          tooltippedElement.getAttribute('title') !== ''
-        ) {
+        if (elementHasNonEmptyAttribute(tooltippedElement, 'title')) {
           title = tooltippedElement.getAttribute('title');
           tooltippedElement.setAttribute('title', '');
           tooltippedElement.dataset.title = title;
-        } else if (
-          tooltippedElement.hasAttribute('data-title') &&
-          tooltippedElement.dataset.title !== ''
-        ) {
+        } else if (elementHasNonEmptyAttribute(tooltippedElement, 'data-title')) {
           title = tooltippedElement.dataset.title;
         }
 
