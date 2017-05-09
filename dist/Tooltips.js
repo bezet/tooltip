@@ -97,36 +97,31 @@ var Tooltips = function () {
 
       this.tooltip = tooltipBox;
 
-      this.copyLabels();
+      this.createTooltipData();
     }
   }, {
-    key: 'copyLabels',
-    value: function copyLabels() {
+    key: 'createTooltipData',
+    value: function createTooltipData() {
       var _this = this;
 
       [].concat(toConsumableArray(this.tooltippedElements)).forEach(function (element) {
         var tooltippedElement = element;
-        var title = '';
 
-        var elementHasNonEmptyAttribute = function elementHasNonEmptyAttribute(el, attribute) {
-          return tooltippedElement.hasAttribute(attribute) && tooltippedElement.getAttribute(attribute) !== '';
+        var elHasNonEmptyAttr = function elHasNonEmptyAttr(el, attr) {
+          return el.hasAttribute(attr) && el.getAttribute(attr) !== '';
         };
 
-        if (tooltippedElement.hasAttribute('title') || tooltippedElement.hasAttribute('data-title')) {
-          // TODO: Provide WAI-ARIA support
+        // TODO: Provide WAI-ARIA support
 
-          if (elementHasNonEmptyAttribute(tooltippedElement, 'title')) {
-            title = tooltippedElement.getAttribute('title');
-            tooltippedElement.setAttribute('title', '');
-            tooltippedElement.dataset.title = title;
-          } else if (elementHasNonEmptyAttribute(tooltippedElement, 'data-title')) {
-            title = tooltippedElement.dataset.title;
-          }
+        if (elHasNonEmptyAttr(tooltippedElement, 'title')) {
+          tooltippedElement.dataset.tooltip = tooltippedElement.getAttribute('title');
+          tooltippedElement.setAttribute('title', '');
+        }
 
-          if (tooltippedElement.dataset.title !== '') {
-            tooltippedElement.dataset.position = _this.getTooltipPosition(tooltippedElement, _this.getTooltipDimensions(title));
-            _this.bindElementEvents(tooltippedElement);
-          }
+        if (elHasNonEmptyAttr(tooltippedElement, 'data-tooltip')) {
+          tooltippedElement.dataset.position = _this.getTooltipPosition(tooltippedElement, _this.getTooltipDimensions(tooltippedElement.dataset.tooltip));
+
+          _this.bindElementEvents(tooltippedElement);
         }
       });
     }
@@ -140,6 +135,30 @@ var Tooltips = function () {
       this.tooltip.textContent = '';
 
       return tooltipDimensions;
+    }
+  }, {
+    key: 'getVerticalTooltipPosition',
+    value: function getVerticalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
+      var verticalTooltipPosition = 'top';
+      if (tooltippedElementRect.top < tooltippedElementRect.height + tooltipDimensions[1]) {
+        verticalTooltipPosition = 'bottom';
+      }
+      return verticalTooltipPosition;
+    }
+  }, {
+    key: 'getHorizontalTooltipPosition',
+    value: function getHorizontalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
+      var horizontalTooltipPosition = 'center';
+
+      if (tooltippedElementRect.left < tooltipDimensions[0] / 2 - tooltippedElementRect.width / 2) {
+        horizontalTooltipPosition = 'left';
+      }
+
+      // if ( tooltippedElementRect.right ) {
+      //   tooltipPosition[ 1 ] = 'right';
+      // }
+
+      return horizontalTooltipPosition;
     }
   }, {
     key: 'getTooltipPosition',
@@ -211,7 +230,7 @@ var Tooltips = function () {
       };
 
       var mouseEnterHandler = function mouseEnterHandler(event) {
-        tooltip.textContent = tooltippedElement.dataset.title;
+        tooltip.textContent = tooltippedElement.dataset.tooltip;
         setTooltipPosition(event);
         setTooltipArrowClass();
         toggleTooltipVisibility();
@@ -232,30 +251,6 @@ var Tooltips = function () {
       tooltippedElement.addEventListener('blur', mouseLeaveHandler);
 
       window.addEventListener('resize', windowResizeHandler);
-    }
-  }], [{
-    key: 'getVerticalTooltipPosition',
-    value: function getVerticalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
-      var verticalTooltipPosition = 'top';
-      if (tooltippedElementRect.top < tooltippedElementRect.height + tooltipDimensions[1]) {
-        verticalTooltipPosition = 'bottom';
-      }
-      return verticalTooltipPosition;
-    }
-  }, {
-    key: 'getHorizontalTooltipPosition',
-    value: function getHorizontalTooltipPosition(tooltippedElementRect, tooltipDimensions) {
-      var horizontalTooltipPosition = 'center';
-
-      if (tooltippedElementRect.left < tooltipDimensions[0] / 2 - tooltippedElementRect.width / 2) {
-        horizontalTooltipPosition = 'left';
-      }
-
-      // if ( tooltippedElementRect.right ) {
-      //   tooltipPosition[ 1 ] = 'right';
-      // }
-
-      return horizontalTooltipPosition;
     }
   }]);
   return Tooltips;
