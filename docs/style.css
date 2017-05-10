@@ -1,3 +1,7 @@
+body {
+  background: #999;
+}
+
 .wrapper {
     width: 404px;
     margin: 100px auto;
@@ -6,6 +10,9 @@
 .anchor {
     display: inline;
     width: 300px;
+    font-size: 12px;
+    line-height: 1.5;
+    text-transform: uppercase;
     border: 1px solid #000;
 }
 
