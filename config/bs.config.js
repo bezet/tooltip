@@ -20,7 +20,12 @@ module.exports = {
       }
   },
   "server": ".",
-  "files": ["docs/*.html", "dist/*.css", "dist/*.js"],
+  "files": [
+    "docs/*.html",
+    "docs/*.css",
+    "dist/*.css",
+    "dist/*.js"
+  ],
   "watchOptions": {},
   "proxy": false,
   "port": 3000,
