@@ -15,21 +15,18 @@ const sourcemaps = require('gulp-sourcemaps');
 
 // PATHS
 
-const basePaths = {
+const paths = {
   src: 'src',
   dist: 'dist',
-  demo: 'docs'
-};
-
-const paths = {
+  demo: 'docs',
   scssFiles: [
-    `${basePaths.src}/*/*.scss`,
-    `${basePaths.src}/*.scss`
+    `${this.src}/*/*.scss`,
+    `${this.src}/*.scss`
   ],
-  cssDest: `${basePaths.dist}/`,
+  cssDest: `${this.dist}/`,
   demoFiles: [
-    `${basePaths.dist}/Tooltips.js`,
-    `${basePaths.dist}/tooltip.css`
+    `${this.dist}/Tooltips.js`,
+    `${this.dist}/tooltip.css`
   ]
 };
 
@@ -59,7 +56,7 @@ gulp.task('watch:scss', ['build:css'], () => {
 });
 
 gulp.task('update:dist', () => {
-  return gulp.src(`${basePaths.dist}/*.css`)
+  return gulp.src(`${paths.dist}/*.css`)
     .pipe(rename({
       prefix: '_',
       extname: '.scss'
@@ -69,7 +66,7 @@ gulp.task('update:dist', () => {
 
 gulp.task('update:demo', () => {
   return gulp.src(paths.demoFiles)
-    .pipe(gulp.dest(basePaths.demo));
+    .pipe(gulp.dest(paths.demo));
 });
 
 
