@@ -97,31 +97,31 @@ var Tooltips = function () {
 
       this.tooltip = tooltipBox;
 
-      this.copyLabels();
+      this.createTooltipData();
     }
   }, {
-    key: 'copyLabels',
-    value: function copyLabels() {
+    key: 'createTooltipData',
+    value: function createTooltipData() {
       var _this = this;
 
       [].concat(toConsumableArray(this.tooltippedElements)).forEach(function (element) {
-        if (element.hasAttribute('title') || element.hasAttribute('data-title')) {
-          // TODO: Provide WAI-ARIA support
+        var tooltippedElement = element;
 
-          var title = '';
+        var elHasNonEmptyAttr = function elHasNonEmptyAttr(el, attr) {
+          return el.hasAttribute(attr) && el.getAttribute(attr) !== '';
+        };
 
-          if (element.hasAttribute('title') && element.getAttribute('title') !== '') {
-            title = element.getAttribute('title');
-            element.setAttribute('title', '');
-            element.dataset.title = title;
-          } else if (element.hasAttribute('data-title') && element.dataset.title !== '') {
-            title = element.dataset.title;
-          }
+        // TODO: Provide WAI-ARIA support
 
-          if (element.dataset.title !== '') {
-            element.dataset.position = _this.getTooltipPosition(element, _this.getTooltipDimensions(title));
-            _this.bindElementEvents(element);
-          }
+        if (elHasNonEmptyAttr(tooltippedElement, 'title')) {
+          tooltippedElement.dataset.tooltip = tooltippedElement.getAttribute('title');
+          tooltippedElement.setAttribute('title', '');
+        }
+
+        if (elHasNonEmptyAttr(tooltippedElement, 'data-tooltip')) {
+          tooltippedElement.dataset.position = _this.getTooltipPosition(tooltippedElement, _this.getTooltipDimensions(tooltippedElement.dataset.tooltip));
+
+          _this.bindElementEvents(tooltippedElement);
         }
       });
     }
@@ -178,7 +178,7 @@ var Tooltips = function () {
       var tooltip = this.tooltip;
       var tooltipPosition = tooltippedElement.dataset.position.split('-');
 
-      var calcXShift = function calcXShift(event) {
+      var calcXShift = function calcXShift() {
         // [TOP/BOTTOM]-LEFT case
         var xShift = tooltippedElementRect.left;
 
@@ -193,7 +193,7 @@ var Tooltips = function () {
         return xShift;
       };
 
-      var calcYShift = function calcYShift(event) {
+      var calcYShift = function calcYShift() {
         var yShift = 0;
 
         if (tooltipPosition[0] === 'top') {
@@ -230,7 +230,7 @@ var Tooltips = function () {
       };
 
       var mouseEnterHandler = function mouseEnterHandler(event) {
-        tooltip.textContent = tooltippedElement.dataset.title;
+        tooltip.textContent = tooltippedElement.dataset.tooltip;
         setTooltipPosition(event);
         setTooltipArrowClass();
         toggleTooltipVisibility();
