@@ -6,24 +6,37 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>baza-tooltips</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="tooltip.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <a class="anchor" href="#" title="Inline link title tooltip">Inline link</a>
+  <div class="wrapper">
+    <a class="anchor --left-top" href="#" title="Inline link title tooltip">Inline link</a>
+    <a class="anchor --center-top" href="#" title="Inline link title tooltip">Inline link</a>
+    <a class="anchor --right-top" href="#" title="Inline link title tooltip">Inline link</a>
 
-    <div class="wrapper">
-        <a class="anchor" href="#" title="Inline link title tooltip">Inline link</a>
-        <a class="anchor anchor--block" href="#" title="" data-tooltip="Block link title tooltip">Block link</a>
+    <div class="inner-wrapper">
+      <div class="inner-wrapper__column">&nbsp;</div>
+      <div class="inner-wrapper__column inner-wrapper__column--half">
+        <a class="anchor anchor--block" href="#" title="" data-tooltip="Block link title tooltip"><span>Block link</span></a>
+        <a class="anchor anchor--block" href="#" title="" data-tooltip="Block link title tooltip"><span>Block link</span></a>
+        <a class="anchor anchor--block" href="#" title="" data-tooltip="Block link title tooltip"><span>Block link</span></a>
+        <a class="anchor anchor--block" href="#" title="" data-tooltip="Block link title tooltip"><span>Block link</span></a>
+      </div>
+      <div class="inner-wrapper__column">&nbsp;</div>
     </div>
 
-    <a class="anchor anchor--right-aligned" href="#" title="Inline link title tooltip">Inline link</a>
+    <a class="anchor --left-bottom" href="#" title="Inline link title tooltip">Inline link</a>
+    <a class="anchor --center-bottom" href="#" title="Inline link title tooltip">Inline link</a>
+    <a class="anchor --right-bottom" href="#" title="Inline link title tooltip">Inline link</a>
+  </div>
 
-    <!-- <script type="text/javascript" src="Tooltips.js"></script> -->
-    <script type="text/javascript" src="../dist/Tooltips.js"></script>
-    <script type="text/javascript">
-        var myTooltip = new Tooltips();
-    </script>
+  <!-- <script type="text/javascript" src="Tooltips.js"></script> -->
+  <script type="text/javascript" src="../dist/Tooltips.js"></script>
+  <script type="text/javascript">
+    var myTooltip = new Tooltips();
+  </script>
 </body>
 </html>
