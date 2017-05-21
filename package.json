@@ -18,7 +18,7 @@
     "build:styles": "gulp build:styles",
     "watch:styles": "gulp watch:styles",
     "serve": "browser-sync start --config config/bs.config.js",
-    "start": "parallelshell -v -w \"npm run serve\" \"npm run watch:js\" \"npm run watch:styles\"",
+    "start": "parallelshell -v -w \"npm run serve\" \"npm run watch:js\" \"npm run watch:styles\" \"npm run watch:dist\"",
     "test": ""
   },
   "repository": {
