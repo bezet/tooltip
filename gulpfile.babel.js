@@ -12,12 +12,12 @@ const paths = {
   src: 'src',
   dist: 'dist',
   demo: 'docs',
-  scssFiles: [
+  stylesSrc: [
     `${this.src}/*/*.scss`,
     `${this.src}/*.scss`
   ],
-  cssDest: `${this.dist}/`,
-  demoFiles: [
+  stylesDest: `${this.dist}/`,
+  demoSrc: [
     `${this.dist}/Tooltips.js`,
     `${this.dist}/tooltip.css`
   ]
@@ -36,16 +36,16 @@ gulp.task('build:css', () => {
     autoprefixer({ browsers: '> 5%, ie 9' })
   ];
 
-  return gulp.src(paths.scssFiles)
+  return gulp.src(paths.stylesSrc)
     .pipe(sourcemaps.init())
     .pipe(sass(sassOptions).on('error', sass.logError))
     .pipe(postcss(postcssPlugins))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(paths.cssDest));
+    .pipe(gulp.dest(paths.stylesDest));
 });
 
 gulp.task('watch:scss', ['build:css'], () => {
-  gulp.watch(paths.scssFiles, ['build:css']);
+  gulp.watch(paths.stylesSrc, ['build:css']);
 });
 
 gulp.task('update:dist', () => {
@@ -54,11 +54,11 @@ gulp.task('update:dist', () => {
       prefix: '_',
       extname: '.scss'
     }))
-    .pipe(gulp.dest(paths.cssDest));
+    .pipe(gulp.dest(paths.stylesDest));
 });
 
 gulp.task('update:demo', () => {
-  return gulp.src(paths.demoFiles)
+  return gulp.src(paths.demoSrc)
     .pipe(gulp.dest(paths.demo));
 });
 
@@ -66,7 +66,7 @@ gulp.task('update:demo', () => {
 // GROUPING TASKS
 
 gulp.task('watch:all', ['build:css'], () => {
-  gulp.watch(paths.scssFiles, ['watch:scss']);
+  gulp.watch(paths.stylesSrc, ['watch:scss']);
 });
 
 gulp.task('default', ['watch:all']);
