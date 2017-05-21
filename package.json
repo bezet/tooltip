@@ -9,14 +9,16 @@
     "doc": "docs"
   },
   "scripts": {
-    "update:dist": "gulp update:dist",
     "update:demo": "gulp update:demo",
+    "watch:dist": "onchange \"dist/**/*.css\" \"dist/**/*.js\" -- npm run update:demo",
     "lint:js": "eslint -c .eslintrc.json --ignore-path .eslintignore --quiet src/*.js --ignore-pattern internals/scripts || exit 0",
-    "build:js": "npm run lint:js && rollup -c config/rollup.config.js",
-    "build:css": "gulp build:css",
-    "watch:scss": "gulp watch:scss",
+    "prebuild:js": "npm run lint:js",
+    "build:js": "rollup -c config/rollup.config.js",
+    "watch:js": "onchange \"src/**/*.js\" -- npm run build:js",
+    "build:styles": "gulp build:styles",
+    "watch:styles": "gulp watch:styles",
     "serve": "browser-sync start --config config/bs.config.js",
-    "start": "npm run serve",
+    "start": "parallelshell -v -w \"npm run serve\" \"npm run watch:js\" \"npm run watch:styles\"",
     "test": ""
   },
   "repository": {
