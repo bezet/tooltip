@@ -13,13 +13,13 @@ const paths = {
   dist: 'dist',
   demo: 'docs',
   stylesSrc: [
-    `${this.src}/*/*.scss`,
-    `${this.src}/*.scss`
+    `src/*/*.scss`,
+    `src/*.scss`
   ],
-  stylesDest: `${this.dist}/`,
+  stylesDest: `dist/`,
   demoSrc: [
-    `${this.dist}/Tooltips.js`,
-    `${this.dist}/tooltip.css`
+    `dist/Tooltips.js`,
+    `dist/tooltip.css`
   ]
 };
 
