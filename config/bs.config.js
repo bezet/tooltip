@@ -19,12 +19,11 @@ module.exports = {
           "port": 8080
       }
   },
-  "server": ".",
+  "server": "docs",
   "files": [
     "docs/*.html",
     "docs/*.css",
-    "dist/*.css",
-    "dist/*.js"
+    "docs/*.js"
   ],
   "watchOptions": {},
   "proxy": false,
