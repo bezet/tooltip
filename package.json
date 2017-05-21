@@ -4,6 +4,7 @@
   "description": "",
   "main": "dist/Tooltips.js",
   "jsnext:main": "src/Tooltips.js",
+  "module": "src/Tooltips.js",
   "directories": {
     "doc": "docs"
   },
