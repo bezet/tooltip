@@ -26,7 +26,7 @@ const paths = {
 
 // TASKS
 
-gulp.task('build:css', () => {
+gulp.task('build:styles', () => {
   const sassOptions = {
     includePaths: ['node_modules'],
     outputStyle: 'compressed'
@@ -44,8 +44,8 @@ gulp.task('build:css', () => {
     .pipe(gulp.dest(paths.stylesDest));
 });
 
-gulp.task('watch:scss', ['build:css'], () => {
-  gulp.watch(paths.stylesSrc, ['build:css']);
+gulp.task('watch:styles', ['build:styles'], () => {
+  gulp.watch(paths.stylesSrc, ['build:styles']);
 });
 
 gulp.task('update:dist', () => {
@@ -65,8 +65,8 @@ gulp.task('update:demo', () => {
 
 // GROUPING TASKS
 
-gulp.task('watch:all', ['build:css'], () => {
-  gulp.watch(paths.stylesSrc, ['watch:scss']);
+gulp.task('watch:all', ['build:styles'], () => {
+  gulp.watch(paths.stylesSrc, ['watch:styles']);
 });
 
 gulp.task('default', ['watch:all']);
