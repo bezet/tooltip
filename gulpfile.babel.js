@@ -1,10 +1,3 @@
-// import gulp from 'gulp';
-// import sass from 'gulp-sass';
-// import rename from 'gulp-rename';
-// import postcss from 'gulp-postcss';
-// import autoprefixer from 'autoprefixer';
-// import sourcemaps from 'gulp-sourcemaps';
-
 const gulp = require('gulp');
 const sass = require('gulp-sass');
 const rename = require('gulp-rename');
