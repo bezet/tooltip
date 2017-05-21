@@ -55,15 +55,6 @@ gulp.task('watch:styles', ['build:styles'], () => {
   gulp.watch(paths.stylesSrc, ['build:styles']);
 });
 
-gulp.task('update:dist', () => {
-  return gulp.src(`${paths.dist}/*.css`)
-    .pipe(rename({
-      prefix: '_',
-      extname: '.scss'
-    }))
-    .pipe(gulp.dest(paths.stylesDest));
-});
-
 gulp.task('update:demo', () => {
   return gulp.src(paths.demoSrc)
     .pipe(gulp.dest(paths.demo));
