@@ -4,6 +4,7 @@ const rename = require('gulp-rename');
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
+const filter = require('gulp-filter');
 
 
 // PATHS
@@ -41,6 +42,12 @@ gulp.task('build:styles', () => {
     .pipe(sass(sassOptions).on('error', sass.logError))
     .pipe(postcss(postcssPlugins))
     .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(paths.stylesDest))
+    .pipe(filter('**/*.css'))
+    .pipe(rename({
+      prefix: '_',
+      extname: '.scss'
+    }))
     .pipe(gulp.dest(paths.stylesDest));
 });
 
