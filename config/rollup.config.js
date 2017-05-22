@@ -16,7 +16,6 @@ export default {
           "modules": false
         }]
       ],
-      "plugins": ["external-helpers"],
       exclude: 'node_modules/**'
     } )
   ],
