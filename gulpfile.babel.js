@@ -1,10 +1,10 @@
-const gulp = require('gulp');
-const sass = require('gulp-sass');
-const rename = require('gulp-rename');
-const postcss = require('gulp-postcss');
-const autoprefixer = require('autoprefixer');
-const sourcemaps = require('gulp-sourcemaps');
-const filter = require('gulp-filter');
+import gulp from 'gulp';
+import sass from 'gulp-sass';
+import rename from 'gulp-rename';
+import postcss from 'gulp-postcss';
+import autoprefixer from 'autoprefixer';
+import sourcemaps from 'gulp-sourcemaps';
+import filter from 'gulp-filter';
 
 
 // PATHS
