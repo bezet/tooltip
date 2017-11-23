@@ -1,3 +1,5 @@
 *.config.js
 *.conf.js
 *.spec.js
+
+gulpfile*
