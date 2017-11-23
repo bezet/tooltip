@@ -1,13 +1,15 @@
 {
   "name": "baza-tooltips",
   "version": "0.1.0",
-  "description": "",
+  "description": "A library for displaying tooltips.",
+  "author": {
+    "name": "bezet",
+    "email": "bartosz.zadara@gmail.com",
+    "url": "https://github.com/bezet"
+  },
   "main": "dist/Tooltips.js",
   "jsnext:main": "src/Tooltips.js",
   "module": "src/Tooltips.js",
-  "directories": {
-    "doc": "docs"
-  },
   "scripts": {
     "update:demo": "gulp update:demo",
     "build:js": "gulp build:js",
@@ -17,12 +19,6 @@
     "serve": "gulp serve",
     "start": "gulp"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bezet/baza-tooltips.git"
-  },
-  "author": "bezet",
-  "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^7.1.0",
     "babel-core": "^6.24.1",
@@ -45,8 +41,9 @@
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.0"
   },
-  "bugs": {
-    "url": "https://github.com/bezet/baza-tooltips/issues"
-  },
-  "homepage": "https://github.com/bezet/baza-tooltips#readme"
+  "keywords": [
+    "tooltips"
+  ],
+  "repository": "https://github.com/bezet/baza-tooltips",
+  "license": "MIT"
 }
