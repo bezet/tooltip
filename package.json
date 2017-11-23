@@ -10,16 +10,12 @@
   },
   "scripts": {
     "update:demo": "gulp update:demo",
-    "watch:dist": "onchange \"dist/**/*.css\" \"dist/**/*.js\" -- npm run update:demo",
-    "lint:js": "eslint -c .eslintrc.json --ignore-path .eslintignore --quiet src/*.js --ignore-pattern internals/scripts || exit 0",
-    "prebuild:js": "npm run lint:js",
-    "build:js": "rollup -c config/rollup.config.js",
-    "watch:js": "onchange \"src/**/*.js\" -- npm run build:js",
+    "build:js": "gulp build:js",
+    "watch:js": "gulp watch:js",
     "build:styles": "gulp build:styles",
     "watch:styles": "gulp watch:styles",
-    "serve": "browser-sync start --config config/bs.config.js",
-    "start": "parallelshell -v -w \"npm run serve\" \"npm run watch:js\" \"npm run watch:styles\" \"npm run watch:dist\"",
-    "test": ""
+    "serve": "gulp serve",
+    "start": "gulp"
   },
   "repository": {
     "type": "git",
