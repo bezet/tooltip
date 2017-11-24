@@ -7,11 +7,8 @@ import autoprefixer from 'autoprefixer';
 import rename from 'gulp-rename';
 import sourcemaps from 'gulp-sourcemaps';
 import eslint from 'gulp-eslint';
-import rollup from 'rollup';
+import webpack from 'webpack-stream';
 import browserSync from 'browser-sync';
-import commonjs from 'rollup-plugin-commonjs';
-import nodeResolve from 'rollup-plugin-node-resolve';
-import babel from 'rollup-plugin-babel';
 import { argv } from 'yargs';
 
 const browserSyncInstance = browserSync.create();
@@ -32,15 +29,19 @@ paths.base = {
   demo: `${paths.root}/docs`
 };
 
+paths.html = {
+  src    : [`${paths.base.src}/*{.html,/*.html}`]
+};
+
 paths.js = {
-  src    : [`${paths.base.src}/scripts/*{.js,/*.js}`],
-  srcMain: [`${paths.base.src}/scripts/index.js`],  
+  src    : [`${paths.base.src}/*{.js,/*.js}`],
+  srcMain: [`${paths.base.src}/Tooltips.js`],  
   dest   :  `${paths.base.dest}`
 };
 
 paths.styles = {
   src    : [`${paths.base.src}/scss/*{.scss,/*.scss}`],
-  srcMain: [`${paths.base.src}/scss/main.scss`],
+  srcMain: [`${paths.base.src}/scss/tooltip.scss`],
   dest   :  `${paths.base.dest}`
 };
 
@@ -51,39 +52,19 @@ gulp.task('argv-test', () => {
 });
 
 gulp.task('lint:js', () => {
-    return gulp.src(['**/*.js','!node_modules/**'])
-      .pipe(eslint({
-        configFile: '.eslintrc.json'
-      }))
-      .pipe(eslint.format());
-      // .pipe(eslint.failAfterError());
+  return gulp.src(paths.js.src)
+    .pipe(eslint({
+      configFile: '.eslintrc.json'
+    }))
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 });
 
-gulp.task('build:js', () => {
-  return rollup.rollup({
-    entry: 'src/Tooltips.js',
-    plugins: [
-      commonjs(),
-      nodeResolve( { module: true, jsnext: true, main: true, browser: true } ),
-      babel( {
-        babelrc: false,
-        "presets": [
-          ["env", {
-            "modules": false
-          }]
-        ],
-        exclude: 'node_modules/**'
-      } )
-    ],
-  })
-  .then((bundle) => {
-    bundle.write({
-      format: "umd",
-      moduleName: "Tooltips",
-      dest: 'dist/Tooltips.js',
-      sourceMap: true
-    });
-  });
+gulp.task('build:js', ['lint:js'], () => {
+  return gulp.src(paths.js.srcMain)
+    .pipe(webpack(require('./webpack.config.js')))
+    .pipe(gulp.dest(paths.js.dest))
+    .pipe(browserSyncInstance.reload({stream: true}));
 });
 
 gulp.task('watch:js', ['build:js'], () => {
