@@ -22,6 +22,7 @@
   "devDependencies": {
     "autoprefixer": "^7.1.6",
     "babel-core": "^6.24.1",
+    "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.4.0",
     "browser-sync": "^2.18.13",
     "eslint": "^3.19.0",
