@@ -34,6 +34,8 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.1",
+    "webpack": "^3.8.1",
+    "webpack-stream": "^4.0.0",
     "yargs": "^10.0.3"
   },
   "keywords": [
