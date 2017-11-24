@@ -8,7 +8,7 @@ module.exports = {
   entry: path.resolve(__dirname, rootPath, 'src/Tooltips.js'),
   output: {
     path: path.resolve(__dirname, rootPath, 'dist'),
-    filename: 'bundle.js',
+    filename: 'Tooltips.js',
     library: 'Tooltips',
     libraryTarget: 'umd'
   },
