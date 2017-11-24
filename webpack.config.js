@@ -12,6 +12,7 @@ module.exports = {
     library: 'Tooltips',
     libraryTarget: 'umd'
   },
+  devtool: 'eval-source-map',
   module: {
     rules: [
       {
@@ -22,14 +23,14 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-        drop_console: false,
-      }
-    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
-    })
+    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compress: {
+    //     warnings: false,
+    //     drop_console: false,
+    //   }
+    // })
   ]
 };
