@@ -25,17 +25,9 @@
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.2.0",
-    "gulp": "^3.9.1",
-    "gulp-eslint": "^4.0.0",
-    "gulp-filter": "^5.0.0",
-    "gulp-postcss": "^7.0.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.1.0",
-    "gulp-sourcemaps": "^2.6.1",
     "parallelshell": "^3.0.2",
     "webpack": "^3.8.1",
-    "webpack-stream": "^4.0.0",
-    "yargs": "^10.0.3"
+    "webpack-stream": "^4.0.0"
   },
   "keywords": [
     "tooltips"
