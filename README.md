@@ -1,35 +1,35 @@
-# baza-tooltips [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
+# baza-tooltip [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > This is a simple library that creates custom tooltips on given elements (anchors by default).
 
 ## Installation
 
-We assume you have pre-installed [node.js](https://nodejs.org/). 
+We assume you have pre-installed [node.js](https://nodejs.org/).
 
-You should install baza-tooltips using [npm](https://www.npmjs.com/):
+You should install baza-tooltip using [npm](https://www.npmjs.com/):
 ```bash
-npm i -D baza-tooltips
+npm i -D baza-tooltip
 ```
 Or [yarn](https://yarnpkg.com/en):
 ```bash
-yarn install baza-tooltips
+yarn add baza-tooltip
 ```
 
 ## Usage
 ### Add styles
-`<link rel="stylesheet" type="text/css" href="dist/tooltips.css">`
+`<link rel="stylesheet" type="text/css" href="dist/tooltip.css">`
 
 ### Add JS
 Either
 ```
-import Tooltips from 'baza-tooltips';
-const myTooltips = new Tooltips('a');
+import Tooltip from 'baza-tooltip';
+const myTooltip = new Tooltip('a');
 ```
 
-or    
+or
 ```
-<script type="text/javascript" src="dist/Tooltips.js"></script>
+<script type="text/javascript" src="dist/Tooltip.js"></script>
 <script type="text/javascript">
-    var myTooltips = new Tooltips('a');
+    var myTooltip = new Tooltip('a');
 </script>
 ```
 
@@ -38,7 +38,7 @@ or
 MIT © [bezet](github.com/bezet)
 
 
-[npm-image]: https://badge.fury.io/js/baza-tooltips.svg
-[npm-url]: https://npmjs.org/package/baza-tooltips
-[daviddm-image]: https://david-dm.org/bezet/baza-tooltips.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/bezet/baza-tooltips
+[npm-image]: https://badge.fury.io/js/baza-tooltip.svg
+[npm-url]: https://npmjs.org/package/baza-tooltip
+[daviddm-image]: https://david-dm.org/bezet/baza-tooltip.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/bezet/baza-tooltip

@@ -18,6 +18,11 @@
       "no-param-reassign": 1,
       "class-methods-use-this": 1,
       "comma-dangle": 0,
+<<<<<<< HEAD
       "arrow-body-style": [0, "never"]
+=======
+      "arrow-body-style": [0, "never"],
+      "import/no-extraneous-dependencies": 0
+>>>>>>> dev
     }
 }
