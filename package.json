@@ -7,9 +7,9 @@
     "email": "bartosz.zadara@gmail.com",
     "url": "https://github.com/bezet"
   },
-  "main": "dist/Tooltips.js",
-  "jsnext:main": "src/Tooltips.js",
-  "module": "src/Tooltips.js",
+  "main": "dist/Tooltip.js",
+  "jsnext:main": "src/Tooltip.js",
+  "module": "src/Tooltip.js",
   "scripts": {
     "demo:update": "cp dist/* docs/dist",
     "dev:serve": "browser-sync start --config config/bs.config.js",
