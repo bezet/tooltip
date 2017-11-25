@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 const rootPath = '../';
-const libName = 'Tooltips';
+const libName = 'Tooltip';
 
 module.exports = {
   watch: true,
