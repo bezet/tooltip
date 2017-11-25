@@ -1,15 +1,17 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const rootPath = './';
+const rootPath = '../';
+const libName = 'Tooltips';
 
 module.exports = {
-  watch: false,
-  entry: path.resolve(__dirname, rootPath, 'src/Tooltips.js'),
+  watch: true,
+  cache: true,
+  entry: path.resolve(__dirname, rootPath, `src/${libName}.js`),
   output: {
     path: path.resolve(__dirname, rootPath, 'dist'),
-    filename: 'Tooltips.js',
-    library: 'Tooltips',
+    filename: `${libName}.js`,
+    library: `${libName}`,
     libraryTarget: 'umd'
   },
   devtool: 'eval-source-map',
@@ -22,15 +24,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"',
-    }),
-    // new webpack.optimize.UglifyJsPlugin({
-    //   compress: {
-    //     warnings: false,
-    //     drop_console: false,
-    //   }
-    // })
-  ]
+  plugins: []
 };

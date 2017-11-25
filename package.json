@@ -11,10 +11,12 @@
   "jsnext:main": "src/Tooltips.js",
   "module": "src/Tooltips.js",
   "scripts": {
-    "update:demo": "cp dist/* docs/dist",
-    "serve": "browser-sync start --config bs.config.js",
-    "webpack": "webpack --config webpack.config.js --progress",
-    "start": "parallelshell -v -w \"npm run serve\" \"npm run webpack\""
+    "demo:update": "cp dist/* docs/dist",
+    "dev:serve": "browser-sync start --config config/bs.config.js",
+    "dev:build": "webpack --config config/webpack.dev.js --progress",
+    "dev": "parallelshell -v -w \"npm run dev:serve\" \"npm run dev:build\"",
+    "prod": "webpack --config config/webpack.prod.js --progress",
+    "start": "npm run dev"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
@@ -26,7 +28,9 @@
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.2.0",
     "parallelshell": "^3.0.2",
+    "uglifyjs-webpack-plugin": "^1.1.1",
     "webpack": "^3.8.1",
+    "webpack-merge": "^4.1.1",
     "webpack-stream": "^4.0.0"
   },
   "keywords": [
