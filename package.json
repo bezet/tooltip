@@ -11,13 +11,10 @@
   "jsnext:main": "src/Tooltips.js",
   "module": "src/Tooltips.js",
   "scripts": {
-    "update:demo": "gulp update:demo",
-    "build:js": "gulp build:js",
-    "watch:js": "gulp watch:js",
-    "build:styles": "gulp build:styles",
-    "watch:styles": "gulp watch:styles",
-    "serve": "gulp serve",
-    "start": "gulp"
+    "update:demo": "cp dist/* docs/dist",
+    "serve": "browser-sync start --config bs.config.js",
+    "webpack": "webpack --config webpack.config.js --progress",
+    "start": "parallelshell -v -w \"npm run serve\" \"npm run webpack\""
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
@@ -35,6 +32,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.1",
+    "parallelshell": "^3.0.2",
     "webpack": "^3.8.1",
     "webpack-stream": "^4.0.0",
     "yargs": "^10.0.3"
