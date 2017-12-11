@@ -7,9 +7,9 @@
     "email": "bartosz.zadara@gmail.com",
     "url": "https://github.com/bezet"
   },
-  "main": "dist/Tooltip.js",
-  "jsnext:main": "src/Tooltip.js",
-  "module": "src/Tooltip.js",
+  "main": "dist/baza-tooltip.js",
+  "jsnext:main": "src/lib/Tooltip.js",
+  "module": "src/lib/Tooltip.js",
   "scripts": {
     "dev:serve": "gulp serve",
     "start": "gulp"
