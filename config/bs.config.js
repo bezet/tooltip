@@ -8,9 +8,7 @@ module.exports = {
     }
   },
   files: [
-    "docs/*.html",
-    "docs/*.css",
-    "docs/*.js"
+    "docs/**/*"
   ],
   notify: false
 };

@@ -1,4 +1,3 @@
-import Tooltip from './Tooltip';
-import './_tooltip.scss';
+import Tooltip from './lib/Tooltip';
 
 export default Tooltip;

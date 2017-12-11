@@ -7,17 +7,12 @@
     "email": "bartosz.zadara@gmail.com",
     "url": "https://github.com/bezet"
   },
-  "main": "dist/Tooltip.js",
-  "jsnext:main": "src/Tooltip.js",
-  "module": "src/Tooltip.js",
+  "main": "dist/baza-tooltip.js",
+  "jsnext:main": "src/lib/Tooltip.js",
+  "module": "src/lib/Tooltip.js",
   "scripts": {
-    "demo:update": "cp dist/* docs/dist",
-    "dev:serve": "browser-sync start --config config/bs.config.js",
-    "dev:build": "webpack --config config/webpack.dev.js --progress",
-    "dev": "parallelshell -v -w \"npm run dev:serve\" \"npm run dev:build\"",
-    "prod:build": "webpack --config config/webpack.prod.js --progress",
-    "prod": "npm run prod:build",
-    "start": "npm run dev"
+    "dev:serve": "gulp serve",
+    "start": "gulp"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
@@ -26,18 +21,22 @@
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-env": "^1.4.0",
     "browser-sync": "^2.18.13",
-    "css-loader": "^0.28.7",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.2.0",
-    "extract-text-webpack-plugin": "^3.0.2",
+    "gulp": "^3.9.1",
+    "gulp-postcss": "^7.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.1",
     "node-sass": "^4.7.2",
+    "normalize.css": "^7.0.0",
     "parallelshell": "^3.0.2",
-    "sass-loader": "^6.0.6",
-    "style-loader": "^0.19.0",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "webpack": "^3.8.1",
-    "webpack-merge": "^4.1.1"
+    "webpack-merge": "^4.1.1",
+    "webpack-stream": "^4.0.0",
+    "yargs": "^10.0.3"
   },
   "keywords": [
     "tooltips"

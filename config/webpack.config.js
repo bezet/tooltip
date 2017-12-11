@@ -1,12 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const packageInfo = require('../package.json');
 
 const rootPath = '../';
-const libName = 'Tooltip';
+const libName = packageInfo.name;
 
 module.exports = {
-  watch: true,
   cache: true,
   entry: path.resolve(__dirname, rootPath, 'src/index.js'),
   output: {
@@ -24,20 +23,7 @@ module.exports = {
         query: {
           plugins: ['babel-plugin-add-module-exports']
         }
-      },
-      {
-        test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            "css-loader",
-            "sass-loader"
-          ],
-          fallback: "style-loader"
-        })
       }
     ]
-  },
-  plugins: [
-    new ExtractTextPlugin(`${libName.toLowerCase()}.css`)
-  ]
+  }
 };
