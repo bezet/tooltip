@@ -1,4 +1,4 @@
-class Tooltips {
+class Tooltip {
   constructor(tooltipSelector = 'a') {
     this.tooltippedElements = document.querySelectorAll(tooltipSelector);
     this.tooltip = null;
@@ -172,4 +172,4 @@ class Tooltips {
   }
 }
 
-export default Tooltips;
+export default Tooltip;

@@ -1,3 +1,6 @@
+dist
+docs
+
 *.config.js
 *.conf.js
 *.spec.js

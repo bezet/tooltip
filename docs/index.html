@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>baza-tooltips</title>
+    <title>baza-tooltip</title>
 
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
     <link rel="stylesheet" href="normalize.css">
-    <link rel="stylesheet" href="tooltip.css">
+    <link rel="stylesheet" href="dist/tooltip.css">
     <link rel="stylesheet" href="demo.css">
 </head>
 <body>
@@ -23,21 +23,18 @@
     <a class="anchor --right-bottom" href="#" title="Inline link title tooltip">Inline link</a>
 
     <div class="inner-wrapper">
-      <!-- <div class="inner-wrapper__column">&nbsp;</div> -->
       <div class="inner-wrapper__column inner-wrapper__column--half">
         <a class="anchor anchor--block" href="#" title="Block link title tooltip"><span>Block link</span></a>
         <a class="anchor anchor--block" href="#" title="Block link title tooltip"><span>Block link</span></a>
         <a class="anchor anchor--block" href="#" title="" data-tooltip="Block link data-title tooltip"><span>Block link</span></a>
         <a class="anchor anchor--block" href="#" title="" data-tooltip="Block link data-title tooltip"><span>Block link</span></a>
       </div>
-      <!-- <div class="inner-wrapper__column">&nbsp;</div> -->
     </div>
   </div>
 
-  <script type="text/javascript" src="Tooltips.js"></script>
-  <!-- <script type="text/javascript" src="../dist/Tooltips.js"></script> -->
+  <script type="text/javascript" src="dist/Tooltip.js"></script>
   <script type="text/javascript">
-    var myTooltip = new Tooltips();
+    var myTooltip = new Tooltip();
   </script>
 </body>
 </html>
