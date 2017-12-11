@@ -9,14 +9,15 @@ import sourcemaps from 'gulp-sourcemaps';
 import { argv } from 'yargs';
 import webpack from 'webpack-stream';
 import browserSync from 'browser-sync';
+import merge from 'gulp-merge';
 
-const browserSyncInstance = browserSync.create();
+import packageInfo from './package.json';
 
 const PRODUCTION = argv.production ? true : false;
 
-// PATHS
 
-const vHostURL = 'localhost';
+
+// PATHS
 
 const paths = {};
 
@@ -27,33 +28,41 @@ paths.base = {
   dest: `${paths.root}/dist`
 };
 
-paths.html = {
-  src : [`${paths.base.src}/templates/*{.html,/*.html}`],
-  dest:  `${paths.base.dest}`
-};
-
 paths.js = {
-  src    : [`${paths.base.src}/scripts/*{.js,/*.js}`],
-  srcMain: [`${paths.base.src}/scripts/index.js`],
+  srcMain: [`${paths.base.src}/index.js`],
+  src    : [`${paths.base.src}/lib/*{.js,/*.js}`],
   dest   :  `${paths.base.dest}`
 };
 
 paths.styles = {
-  src    : [`${paths.base.src}/scss/*{.scss,/*.scss}`],
-  srcMain: [`${paths.base.src}/scss/main.scss`],
+  src    : [`${paths.base.src}/lib/*.scss`],
   dest   :  `${paths.base.dest}`
 };
 
-paths.images = {
-  raster: [`${paths.base.src}/images/*.{png,jpg,gif}`],
-  vector: [`${paths.base.src}/images/*.svg`],
-  dest  :  `${paths.base.dest}/images`
+paths.demo = {
+  html   : [`${paths.base.src}/demo/*{.html,/*.html}`],
+  scss   : [`${paths.base.src}/demo/*{.scss,/*.scss}`],
+  images : [`${paths.base.src}/demo/images/*{png,jpg,gif,svg}`],
+  libSrc :  `${paths.base.dest}`,
+  dest   :  `${paths.base}/docs`
 };
 
-paths.files = {
-  src : [`${paths.base.src}/files/*`],
-  dest:  `${paths.base.dest}/files`
-};
+
+
+// CONFIGS
+
+const browserSyncInstance = browserSync.create();
+const bsConfig = require('./config/bs.config.js');
+
+const webpackConfig = PRODUCTION ? './config/webpack.prod.js' : './config/webpack.dev.js';
+
+const sassOptions = {};
+sassOptions.includePaths = ['node_modules'];
+sassOptions.outputStyle = PRODUCTION ? 'compressed' : 'expanded';
+
+const postcssPlugins = [autoprefixer({ browsers: '> 5%, ie 9' })];
+
+
 
 // TASKS
 
@@ -61,15 +70,36 @@ gulp.task('argv-test', () => {
   console.log(argv);
 });
 
-gulp.task('build:templates', () => {
-  return gulp.src(paths.html.src)
-    .pipe(gulp.dest(paths.html.dest))
-    .pipe(browserSyncInstance.reload({stream: true}));
+
+
+// demo
+
+gulp.task('demo:html', () => {
+  return gulp.src(paths.demo.html)
+    .pipe(gulp.dest(paths.demo.dest));
 });
+
+gulp.task('demo:styles', () => {
+  return gulp.src(paths.demo.scss)
+    .pipe(sass(sassOptions).on('error', sass.logError))
+    .pipe(postcss(postcssPlugins))
+    .pipe(gulp.dest(paths.demo.dest));
+});
+
+gulp.task('demo:lib', () => {
+  return gulp.src(paths.demo.libSrc)
+    .pipe(gulp.dest(paths.demo.dest));
+});
+
+gulp.task('demo', ['demo:html', 'demo:styles', 'demo:lib'], () => {});
+
+
+
+// scripts
 
 gulp.task('build:js', () => {
   return gulp.src(paths.js.srcMain)
-    .pipe(webpack(require('./webpack.config.js')))
+    .pipe(webpack(require(webpackConfig)))
     .pipe(gulp.dest(paths.js.dest))
     .pipe(browserSyncInstance.reload({stream: true}));
 });
@@ -78,22 +108,17 @@ gulp.task('watch:js', ['build:js'], () => {
   gulp.watch(paths.js.src, ['build:js']);
 });
 
+
+
+// styles
+
 gulp.task('build:styles', () => {
-  const sassOptions = {
-    includePaths: ['node_modules'],
-    outputStyle: 'compressed'
-  };
-
-  const postcssPlugins = [
-    autoprefixer({ browsers: '> 5%, ie 9' })
-  ];
-
-  return gulp.src(paths.styles.srcMain)
+  return gulp.src(paths.styles.src)
     .pipe(sourcemaps.init())
     .pipe(sass(sassOptions).on('error', sass.logError))
     .pipe(postcss(postcssPlugins))
     .pipe(rename({
-      basename: 'bundle'
+      basename: packageInfo.name
     }))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(paths.styles.dest))
@@ -104,54 +129,28 @@ gulp.task('watch:styles', ['build:styles'], () => {
   gulp.watch(paths.styles.src, ['build:styles']);
 });
 
-gulp.task('images:raster', () => {
-  return gulp.src(paths.images.raster)
-    .pipe(gulp.dest(paths.images.dest));
-});
 
-gulp.task('images:vector', () => {
-  return gulp.src(paths.images.vector)
-    .pipe(gulp.dest(paths.images.dest));
-});
 
-gulp.task('images', ['images:raster', 'images:vector']);
-
-gulp.task('files', () => {
-  return gulp.src(paths.files.src)
-    .pipe(gulp.dest(paths.files.dest));
-});
-
-// LOCAL SERVER
+// local dev server
 
 gulp.task('serve', ['build:all'], () => {
-  const bsConfig = {
-    server: {
-      baseDir: "dist",
-      index: "index.html",
-      middleware: function (req, res, next) {
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        next();
-      }
-    },
-    notify: false
-  };
-
   browserSyncInstance.init(bsConfig);
 
-  gulp.watch(paths.styles.src, ['build:styles']);
   gulp.watch(paths.js.src, ['build:js']);
-  gulp.watch(paths.html.src, ['build:templates']);
-  // gulp.watch(paths.html.dest).on('change', browserSyncInstance.reload);
+  gulp.watch(paths.styles.src, ['build:styles']);
+  gulp.watch(paths.demo.html, ['build:demo']);
 });
 
-// GROUPING TASKS
 
-gulp.task('build:all', ['build:templates', 'build:styles', 'build:js', 'images', 'files']);
 
-gulp.task('watch:all', ['build:all'], () => {
-  gulp.watch(paths.html.src, ['build:templates']);
-  gulp.watch(paths.styles.src, ['build:styles']);
+// other tasks
+
+gulp.task('build:all', ['build:demo']);
+
+gulp.task('watch:all', ['build:demo'], () => {
   gulp.watch(paths.js.src, ['build:js']);
+  gulp.watch(paths.styles.src, ['build:styles']);
+  gulp.watch(paths.demo.html, ['build:demo']);
 });
 
 gulp.task('default', ['serve']);
