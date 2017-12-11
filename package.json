@@ -11,13 +11,8 @@
   "jsnext:main": "src/Tooltip.js",
   "module": "src/Tooltip.js",
   "scripts": {
-    "demo:update": "cp dist/* docs/dist",
-    "dev:serve": "browser-sync start --config config/bs.config.js",
-    "dev:build": "webpack --config config/webpack.dev.js --progress",
-    "dev": "parallelshell -v -w \"npm run dev:serve\" \"npm run dev:build\"",
-    "prod:build": "webpack --config config/webpack.prod.js --progress",
-    "prod": "npm run prod:build",
-    "start": "npm run dev"
+    "dev:serve": "gulp serve",
+    "start": "gulp"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
