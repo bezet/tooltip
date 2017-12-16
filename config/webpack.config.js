@@ -1,17 +1,24 @@
-const path = require('path');
-const webpack = require('webpack');
-const packageInfo = require('../package.json');
+import path from 'path';
+import webpack from 'webpack';
+import packageInfo from '../package.json';
 
 const rootPath = '../';
-const libName = packageInfo.name;
+
+const capitalize = (word) => {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+};
+
+const pascalCase = (string) => {
+  return string.split('-').map(word => capitalize(word)).join('');
+};
 
 module.exports = {
   cache: true,
   entry: path.resolve(__dirname, rootPath, 'src/index.js'),
   output: {
     path: path.resolve(__dirname, rootPath, 'dist'),
-    filename: `${libName}.js`,
-    library: `${libName}`,
+    filename: `${packageInfo.name}.js`,
+    library: `${pascalCase(packageInfo.name)}`,
     libraryTarget: 'umd'
   },
   module: {
