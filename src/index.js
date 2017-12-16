@@ -1,3 +1,3 @@
-import Tooltip from './lib/Tooltip';
+import BazaTooltip from './lib/Tooltip';
 
-export default Tooltip;
+export default BazaTooltip;

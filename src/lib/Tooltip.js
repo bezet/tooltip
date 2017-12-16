@@ -1,4 +1,4 @@
-class Tooltip {
+class BazaTooltip {
   constructor(tooltipSelector = 'a') {
     this.tooltippedElements = document.querySelectorAll(tooltipSelector);
     this.tooltip = null;
@@ -172,4 +172,4 @@ class Tooltip {
   }
 }
 
-export default Tooltip;
+export default BazaTooltip;
