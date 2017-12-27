@@ -1,5 +1,5 @@
 {
-  "name": "baza-tooltip",
+  "name": "@bezet/tooltip",
   "version": "0.1.0",
   "description": "A library for displaying tooltips.",
   "author": {
@@ -7,7 +7,7 @@
     "email": "bartosz.zadara@gmail.com",
     "url": "https://github.com/bezet"
   },
-  "main": "dist/baza-tooltip.js",
+  "main": "dist/tooltip.js",
   "jsnext:main": "src/lib/Tooltip.js",
   "module": "src/lib/Tooltip.js",
   "scripts": {
@@ -16,6 +16,7 @@
     "build:prod": "gulp build --production",
     "build": "npm run build:prod",
     "serve": "gulp serve",
+    "test": "mocha --require babel-core/register",
     "start": "gulp"
   },
   "devDependencies": {
@@ -33,6 +34,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.1",
+    "mocha": "^4.0.1",
     "node-sass": "^4.7.2",
     "normalize.css": "^7.0.0",
     "parallelshell": "^3.0.2",
@@ -46,6 +48,6 @@
   "keywords": [
     "tooltips"
   ],
-  "repository": "https://github.com/bezet/baza-tooltip",
+  "repository": "https://github.com/bezet/tooltip",
   "license": "MIT"
 }
