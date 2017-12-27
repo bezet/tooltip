@@ -3,6 +3,7 @@ import webpack from 'webpack';
 import packageInfo from '../package.json';
 
 const rootPath = '../';
+const packageName = (packageInfo.name).split('/')[1];
 
 const capitalize = (word) => {
   return word.charAt(0).toUpperCase() + word.slice(1);
@@ -17,8 +18,8 @@ module.exports = {
   entry: path.resolve(__dirname, rootPath, 'src/index.js'),
   output: {
     path: path.resolve(__dirname, rootPath, 'dist'),
-    filename: `${packageInfo.name}.js`,
-    library: `${pascalCase(packageInfo.name)}`,
+    filename: `${packageName}.js`,
+    library: `${pascalCase(packageName)}`,
     libraryTarget: 'umd'
   },
   module: {
