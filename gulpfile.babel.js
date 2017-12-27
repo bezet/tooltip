@@ -14,7 +14,8 @@ import runSequence from 'run-sequence';
 import packageInfo from './package.json';
 
 const PRODUCTION = argv.production ? true : false;
-
+// const packageName = (packageInfo.name).match(/(?:@\w+\/)(\w+)/g);
+const packageName = (packageInfo.name).split('/')[1];
 
 
 // PATHS
@@ -68,8 +69,8 @@ const postcssPlugins = [autoprefixer({ browsers: '> 5%, ie 9' })];
 // TASKS
 
 gulp.task('argv-test', () => {
-  console.log(packageInfo.name);
-  console.log(argv);
+  console.log(packageName);
+  // console.log(argv);
 });
 
 
@@ -115,7 +116,7 @@ gulp.task('build:styles', () => {
     .pipe(sass(sassOptions).on('error', sass.logError))
     .pipe(postcss(postcssPlugins))
     .pipe(rename({
-      basename: packageInfo.name
+      basename: packageName
     }))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(paths.styles.dest));
