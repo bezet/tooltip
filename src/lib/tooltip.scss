@@ -92,10 +92,9 @@ $tooltipBg: #333;
 $tooltipArrowHeight: 4px;
 
 .tooltip {
-
   display: block;
   z-index: 999;
-  position: absolute;
+  position: fixed;
   left: -100%;
   padding: .5em;
   margin: 0;
@@ -132,5 +131,6 @@ $tooltipArrowHeight: 4px;
 }
 
 .tooltip--visible {
+  position: absolute;
   opacity: 1;
 }
