@@ -1,7 +1,7 @@
 .tooltip {
   display: block;
   z-index: 999;
-  position: absolute;
+  position: fixed;
   left: -100%;
   padding: .5em;
   margin: 0;
@@ -96,7 +96,8 @@
 }
 
 .tooltip--visible {
+  position: absolute;
   opacity: 1;
 }
 
-/*# sourceMappingURL=baza-tooltip.css.map */
+/*# sourceMappingURL=tooltip.css.map */
