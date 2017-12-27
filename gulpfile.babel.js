@@ -9,12 +9,13 @@ import sourcemaps from 'gulp-sourcemaps';
 import { argv } from 'yargs';
 import webpack from 'webpack-stream';
 import browserSync from 'browser-sync';
-import merge from 'gulp-merge';
+import runSequence from 'run-sequence';
 
 import packageInfo from './package.json';
 
 const PRODUCTION = argv.production ? true : false;
-
+// const packageName = (packageInfo.name).match(/(?:@\w+\/)(\w+)/g);
+const packageName = (packageInfo.name).split('/')[1];
 
 
 // PATHS
@@ -24,14 +25,15 @@ const paths = {};
 paths.root = '.';
 
 paths.base = {
-  src : `${paths.root}/src`,
-  dest: `${paths.root}/dist`
+  src  : [`${paths.root}/src`],
+  dest :  `${paths.root}/dist`,
+  demo :  `${paths.root}/docs`
 };
 
 paths.js = {
-  srcMain: [`${paths.base.src}/index.js`],
-  src    : [`${paths.base.src}/lib/*{.js,/*.js}`],
-  dest   :  `${paths.base.dest}`
+  srcMain : [`${paths.base.src}/index.js`],
+  src     : [`${paths.base.src}/lib/*{.js,/*.js}`],
+  dest    :  `${paths.base.dest}`
 };
 
 paths.styles = {
@@ -42,9 +44,9 @@ paths.styles = {
 paths.demo = {
   html   : [`${paths.base.src}/demo/*{.html,/*.html}`],
   scss   : [`${paths.base.src}/demo/*{.scss,/*.scss}`],
-  images : [`${paths.base.src}/demo/images/*{png,jpg,gif,svg}`],
+  images : [`${paths.base.src}/demo/images/*.{png,jpg,gif,svg}`],
   libSrc :  `${paths.base.dest}`,
-  dest   :  `${paths.base}/docs`
+  dest   :  `${paths.base.demo}`
 };
 
 
@@ -67,7 +69,8 @@ const postcssPlugins = [autoprefixer({ browsers: '> 5%, ie 9' })];
 // TASKS
 
 gulp.task('argv-test', () => {
-  console.log(argv);
+  console.log(packageName);
+  // console.log(argv);
 });
 
 
@@ -87,11 +90,11 @@ gulp.task('demo:styles', () => {
 });
 
 gulp.task('demo:lib', () => {
-  return gulp.src(paths.demo.libSrc)
-    .pipe(gulp.dest(paths.demo.dest));
+  return gulp.src(`${paths.demo.libSrc}/**/*`)
+    .pipe(gulp.dest(`${paths.demo.dest}/dist`));
 });
 
-gulp.task('demo', ['demo:html', 'demo:styles', 'demo:lib'], () => {});
+gulp.task('demo', ['demo:html', 'demo:styles', 'demo:lib']);
 
 
 
@@ -100,12 +103,7 @@ gulp.task('demo', ['demo:html', 'demo:styles', 'demo:lib'], () => {});
 gulp.task('build:js', () => {
   return gulp.src(paths.js.srcMain)
     .pipe(webpack(require(webpackConfig)))
-    .pipe(gulp.dest(paths.js.dest))
-    .pipe(browserSyncInstance.reload({stream: true}));
-});
-
-gulp.task('watch:js', ['build:js'], () => {
-  gulp.watch(paths.js.src, ['build:js']);
+    .pipe(gulp.dest(paths.js.dest));
 });
 
 
@@ -118,39 +116,42 @@ gulp.task('build:styles', () => {
     .pipe(sass(sassOptions).on('error', sass.logError))
     .pipe(postcss(postcssPlugins))
     .pipe(rename({
-      basename: packageInfo.name
+      basename: packageName
     }))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(paths.styles.dest))
-    .pipe(browserSyncInstance.reload({stream: true}));
-});
-
-gulp.task('watch:styles', ['build:styles'], () => {
-  gulp.watch(paths.styles.src, ['build:styles']);
+    .pipe(gulp.dest(paths.styles.dest));
 });
 
 
 
 // local dev server
 
-gulp.task('serve', ['build:all'], () => {
+gulp.task('serve', ['watch'], () => {
   browserSyncInstance.init(bsConfig);
-
-  gulp.watch(paths.js.src, ['build:js']);
-  gulp.watch(paths.styles.src, ['build:styles']);
-  gulp.watch(paths.demo.html, ['build:demo']);
 });
 
 
 
 // other tasks
 
-gulp.task('build:all', ['build:demo']);
+// gulp build [--production]
+gulp.task('build', () => {
+  runSequence(['build:js', 'build:styles'], 'demo');
+});
 
-gulp.task('watch:all', ['build:demo'], () => {
-  gulp.watch(paths.js.src, ['build:js']);
-  gulp.watch(paths.styles.src, ['build:styles']);
-  gulp.watch(paths.demo.html, ['build:demo']);
+gulp.task('watch', ['build'], () => {
+  gulp.watch(paths.js.srcMain.concat(paths.js.src), () => {
+    runSequence('build:js', 'demo:lib');
+  });
+
+  gulp.watch(paths.styles.src, () => {
+    runSequence('build:styles', 'demo:lib');
+  });
+
+  gulp.watch(paths.demo.html, ['demo:html']);
+  gulp.watch(paths.demo.scss, ['demo:styles']);
+
+  // gulp.watch(`${paths.demo.dest}/**/*`).on('change', browserSyncInstance.reload);
 });
 
 gulp.task('default', ['serve']);

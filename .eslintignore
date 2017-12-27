@@ -1,5 +1,6 @@
 dist
 docs
+test
 
 *.config.js
 *.conf.js

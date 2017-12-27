@@ -1,7 +1,7 @@
-const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const merge = require('webpack-merge');
-const webpackConfig = require('./webpack.config.js');
+import webpack from 'webpack';
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import merge from 'webpack-merge';
+import webpackConfig from './webpack.config';
 
 module.exports = merge(webpackConfig, {
   watch: false,
