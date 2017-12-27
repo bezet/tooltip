@@ -20,7 +20,8 @@ html {
 body {
   position: relative;
   width: 100%;
-  min-height: 500px;
+  height: 100vh;
+  min-height: 720px;
   background: #7a7a7a;
 }
 
@@ -33,6 +34,7 @@ body {
 }
 
 .inner-column {
+  height: 100%;
   padding: 40px 20px;
   text-align: center;
   background: #ffffff;
