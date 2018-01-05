@@ -1,10 +1,26 @@
+/*
+
+position:
+  'left-top'
+  'center-top' || 'top'
+  'right-top'
+
+  'left-center' || 'left'
+
+  'right-center' || 'right'
+
+  'left-bottom'
+  'center-bottom' || 'bottom'
+  'right-bottom'
+
+*/
 class Tooltip {
   constructor(options = {}) {
     this.settings = {
       selector: 'a',
       tooltipClass: 'tooltip',
       margin: 10,
-      position: 'top'
+      position: 'center-top'
     };
 
     Object.keys(options).forEach((option) => {
@@ -22,9 +38,43 @@ class Tooltip {
   }
 
   static getScroll() {
+    const scroll = {};
+
+    scroll.top = (window.pageYOffset !== undefined) ?
+      window.pageYOffset :
+      (document.documentElement || document.body.parentNode || document.body).scrollTop;
+
+    scroll.left = (window.pageXOffset !== undefined) ?
+      window.pageXOffset :
+      (document.documentElement || document.body.parentNode || document.body).scrollLeft;
+
+    return scroll;
+  }
+
+  getDesiredPosition(element) {
+    let position = '';
+
+    if (Tooltip.elHasNonEmptyAttr(element, 'data-position')) {
+      position = element.dataset.position;
+    } else {
+      position = this.settings.position;
+    }
+
+    const posSplit = position.split('-');
+
+    if (posSplit.length < 2) {
+      if (posSplit[0] === 'top' || posSplit[0] === 'bottom') {
+        posSplit.unshift('center');
+      }
+
+      if (posSplit[0] === 'left' || posSplit[0] === 'right') {
+        posSplit.push('center');
+      }
+    }
+
     return {
-      top: (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop,
-      left: (window.pageXOffset !== undefined) ? window.pageXOffset : (document.documentElement || document.body.parentNode || document.body).scrollLeft
+      x: posSplit[0],
+      y: posSplit[1]
     };
   }
 
@@ -37,16 +87,15 @@ class Tooltip {
       this.tooltip.classList.remove(visibilityClass);
     }
 
-    // if (!this.tooltip.classList.contains(visibilityClass)) {
-    //   this.tooltip.removeAttribute('style');
-    // }
+    if (!this.tooltip.classList.contains(visibilityClass)) {
+      this.tooltip.removeAttribute('style');
+    }
   }
 
   removeTooltipArrowClass() {
-    // this.tooltip.removeAttribute('class');
-    // this.tooltip.classList.add(this.settings.tooltipClass);
+    this.tooltip.removeAttribute('class');
     this.tooltip.classList.add(this.settings.tooltipClass);
-  };
+  }
 
   setTooltipArrowClass(tooltipPosition) {
     this.tooltip.classList.add(`tooltip--${tooltipPosition}`);
@@ -56,13 +105,25 @@ class Tooltip {
     const tooltipBounding = this.tooltip.getBoundingClientRect();
     const elementBounding = element.getBoundingClientRect();
     const pageXScroll = Tooltip.getScroll().left;
-    const desiredPosition = element.dataset.position || this.settings.position;
+
+    const desiredPosition = this.getDesiredPosition(element);
+
+    console.log(desiredPosition);
 
     let xPos = null;
 
-    // if (center) {
+    // no space on left side
+    if (!possiblePositions.left) {
+      xPos = pageXScroll + elementBounding.left;
+
+    // no space on right side
+    } else if (!possiblePositions.right) {
+      xPos = pageXScroll + elementBounding.right - tooltipBounding.width;
+
+    // in any other case just center it
+    } else {
       xPos = pageXScroll + elementBounding.left + (elementBounding.width / 2) - (tooltipBounding.width / 2);
-    // }
+    }
 
     // if (possiblePositions.left) {
     //   xPos = pageXScroll + elementBounding.left - this.settings.margin - tooltipBounding.width;
@@ -81,7 +142,7 @@ class Tooltip {
     const tooltipBounding = this.tooltip.getBoundingClientRect();
     const elementBounding = element.getBoundingClientRect();
     const pageYScroll = Tooltip.getScroll().top;
-    const desiredPosition = element.dataset.position || this.settings.position;
+    // const desiredPosition = this.getDesiredPosition(element);
 
     let yPos = null;
 
@@ -130,7 +191,7 @@ class Tooltip {
   setTooltipPosition(element) {
     const possiblePositions = this.getPossiblePositions(element.getBoundingClientRect());
 
-    console.log(possiblePositions);
+    // console.log(possiblePositions);
 
     this.tooltip.style.left = `${this.calcXPos(element, possiblePositions)}px`;
     this.tooltip.style.top = `${this.calcYPos(element, possiblePositions)}px`;
