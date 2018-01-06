@@ -29,7 +29,7 @@
   border-bottom-width: 0;
 }
 
-.tooltip--top-left:before {
+.tooltip--left-top:before {
   content: "";
   display: block;
   position: absolute;
@@ -42,7 +42,7 @@
   border-bottom-width: 0;
 }
 
-.tooltip--top-right:before {
+.tooltip--right-top:before {
   content: "";
   display: block;
   position: absolute;
@@ -55,7 +55,37 @@
   border-bottom-width: 0;
 }
 
-.tooltip--bottom-center:before {
+.tooltip--left-center:before {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: unset;
+  left: unset;
+  top: 50%;
+  right: -4px;
+  margin-top: -4px;
+  margin-left: 0;
+  border: 4px solid transparent;
+  border-left-color: #333;
+  border-right-width: 0;
+}
+
+.tooltip--right-center:before {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: unset;
+  right: unset;
+  top: 50%;
+  left: -4px;
+  margin-top: -4px;
+  margin-left: 0;
+  border: 4px solid transparent;
+  border-right-color: #333;
+  border-left-width: 0;
+}
+
+.tooltip--center-bottom:before {
   content: "";
   display: block;
   position: absolute;
@@ -69,7 +99,7 @@
   border-top-width: 0;
 }
 
-.tooltip--bottom-left:before {
+.tooltip--left-bottom:before {
   content: "";
   display: block;
   position: absolute;
@@ -82,7 +112,7 @@
   border-top-width: 0;
 }
 
-.tooltip--bottom-right:before {
+.tooltip--right-bottom:before {
   content: "";
   display: block;
   position: absolute;
