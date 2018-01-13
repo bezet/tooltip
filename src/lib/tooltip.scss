@@ -22,21 +22,13 @@ $tooltipArrowHeight: 4px;
   }
 }
 
-@mixin arrow-position($position: 'center-top', $height: $tooltipArrowHeight) {
+@mixin arrow-position($position: 'bottom-center', $height: $tooltipArrowHeight) {
   &:before {
     content: "";
     display: block;
     position: absolute;
 
-    @if $position == 'center-top' {
-      bottom: unset;
-      right: unset;
-      top: -$height;
-      left: 50%;
-      margin-left: -$height;
-      @include arrow('up');
-
-    } @else if $position == 'center-bottom' {
+    @if $position == 'bottom-center' {
       top: unset;
       right: unset;
       bottom: -$height;
@@ -44,14 +36,41 @@ $tooltipArrowHeight: 4px;
       margin-left: -$height;
       @include arrow('down');
 
-    } @else if $position == 'left-center' {
+    } @else if $position == 'bottom-left' {
+      top: unset;
+      right: unset;
+      bottom: -$height;
+      left: 10px;
+      @include arrow('down');
+
+    } @else if $position == 'bottom-right' {
+      top: unset;
+      left: unset;
+      bottom: -$height;
+      right: 10px;
+      @include arrow('down');
+
+    } @else if $position == 'top-center' {
       bottom: unset;
       right: unset;
-      top: 50%;
-      left: -$height;
-      margin-top: -$height;
-      margin-left: 0;
-      @include arrow('left');
+      top: -$height;
+      left: 50%;
+      margin-left: -$height;
+      @include arrow('up');
+
+    } @else if $position == 'top-left' {
+      bottom: unset;
+      right: unset;
+      top: -$height;
+      left: 10px;
+      @include arrow('up');
+
+    } @else if $position == 'top-right' {
+      bottom: unset;
+      left: unset;
+      top: -$height;
+      right: 10px;
+      @include arrow('up');
 
     } @else if $position == 'right-center' {
       bottom: unset;
@@ -62,33 +81,50 @@ $tooltipArrowHeight: 4px;
       margin-left: 0;
       @include arrow('right');
 
-    } @else if $position == 'left-top' {
-      bottom: unset;
-      right: unset;
-      top: -$height;
-      left: 10px;
-      @include arrow('up');
-
     } @else if $position == 'right-top' {
       bottom: unset;
       left: unset;
-      top: -$height;
-      right: 10px;
-      @include arrow('up');
+      top: 10px;
+      right: -$height;
+      margin-top: 0;
+      margin-left: 0;
+      @include arrow('right');
+
+    } @else if $position == 'right-bottom' {
+      left: unset;
+      top: unset;
+      bottom: 10px;
+      right: -$height;
+      margin-top: 0;
+      margin-left: 0;
+      @include arrow('right');
+
+    } @else if $position == 'left-center' {
+      bottom: unset;
+      right: unset;
+      top: 50%;
+      left: -$height;
+      margin-top: -$height;
+      margin-left: 0;
+      @include arrow('left');
+
+    } @else if $position == 'left-top' {
+      bottom: unset;
+      right: unset;
+      top: 10px;
+      left: -$height;
+      margin-top: 0;
+      margin-left: 0;
+      @include arrow('left');
 
     } @else if $position == 'left-bottom' {
       top: unset;
       right: unset;
-      bottom: -$height;
-      left: 10px;
-      @include arrow('down');
-
-    } @else if $position == 'right-bottom' {
-      top: unset;
-      left: unset;
-      bottom: -$height;
-      right: 10px;
-      @include arrow('down');
+      bottom: 10px;
+      left: -$height;
+      margin-top: 0;
+      margin-left: 0;
+      @include arrow('left');
     }
   }
 }
@@ -109,35 +145,51 @@ $tooltipArrowHeight: 4px;
   opacity: 0;
   transition: opacity .3s ease;
 
-  @include arrow-position('center-bottom');
+  @include arrow-position('bottom-center');
 }
 
-.tooltip--left-top {
-  @include arrow-position('left-bottom');
+.tooltip--top-start {
+  @include arrow-position('bottom-left');
 }
 
-.tooltip--right-top {
-  @include arrow-position('right-bottom');
+.tooltip--top-end {
+  @include arrow-position('bottom-right');
+}
+
+.tooltip--bottom-center {
+  @include arrow-position('top-center');
+}
+
+.tooltip--bottom-start {
+  @include arrow-position('top-left');
+}
+
+.tooltip--bottom-end {
+  @include arrow-position('top-right');
 }
 
 .tooltip--left-center {
   @include arrow-position('right-center');
 }
 
+.tooltip--left-start {
+  @include arrow-position('right-top');
+}
+
+.tooltip--left-end {
+  @include arrow-position('right-bottom');
+}
+
 .tooltip--right-center {
   @include arrow-position('left-center');
 }
 
-.tooltip--center-bottom {
-  @include arrow-position('center-top');
-}
-
-.tooltip--left-bottom {
+.tooltip--right-start {
   @include arrow-position('left-top');
 }
 
-.tooltip--right-bottom {
-  @include arrow-position('right-top');
+.tooltip--right-end {
+  @include arrow-position('left-bottom');
 }
 
 .tooltip--visible {
