@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>baza-tooltip</title>
+  <title>bezet's Tooltip</title>
 
   <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
 
@@ -15,43 +15,72 @@
 
   <div class="wrapper">
     <div class="inner-column">
-      <h1 class="lib-name">baza-Tooltip</h1>
-
-      <a class="anchor" href="#" title="Inline link title tooltip">Inline link</a>
-      <a class="anchor" href="#" title="Inline link title tooltip">Inline link</a>
-      <a class="anchor" href="#" title="Inline link title tooltip">Inline link</a>
-      <a class="anchor" href="#" title="Inline link title tooltip">Inline link</a>
-      <a class="anchor" href="#" title="Inline link title tooltip">Inline link</a>
-      <a class="anchor" href="#" title="Inline link title tooltip">Inline link</a>
-      <a class="anchor" href="#" title="Inline link title tooltip">Inline link</a>
-      <a class="anchor" href="#" title="Inline link title tooltip">Inline link</a>
+      <header class="site-header">
+        <h1 class="lib-name"><span>bezet's</span> Tooltip</h1>
+      </header>
 
       <ul class="blocks">
         <li class="blocks__item">
-          <a class="anchor anchor--block" href="#" title="Block link title tooltip">Block link</a></li>
+          <a class="btn" href="#" title="This is example content. You can set it by adding title or data-tooltip attribute." data-position="top-start">top-start</a>
+        </li>
         <li class="blocks__item">
-          <a class="anchor anchor--block" href="#" title="Block link title tooltip">Block link</a></li>
+          <a class="btn" href="#" title="This is example content. You can set it by adding title or data-tooltip attribute." data-position="top-center">top-center</a>
+        </li>
         <li class="blocks__item">
-          <a class="anchor anchor--block" href="#" title="" data-tooltip="Block link data-title tooltip" data-position="left-center">Block link</a></li>
+          <a class="btn" href="#" title="This is example content. You can set it by adding title or data-tooltip attribute." data-position="top-end">top-end</a>
+        </li>
         <li class="blocks__item">
-          <a class="anchor anchor--block" href="#" title="" data-tooltip="Block link bottom" data-position="bottom">Block link</a>
+          <a class="btn" href="#" title="This is example content. You can set it by adding title or data-tooltip attribute." data-position="left-start">left-start</a>
+        </li>
+        <li class="blocks__item">
+          <a class="btn" href="#" title="Tooltip is center aligned by default so you may provide only side setting." data-position="bottom">bottom</a>
+        </li>
+        <li class="blocks__item">
+          <a class="btn" href="#" title="This is example content. You can set it by adding title or data-tooltip attribute." data-position="right-start">right-start</a>
+        </li>
+        <li class="blocks__item">
+          <a class="btn" href="#" title="Tooltip is center aligned by default so you may provide only side setting." data-position="left-center">left-center</a>
+        </li>
+        <li class="blocks__item">
+          <span class="btn btn--ghost" data-tooltip="Tooltip position can be set by adding data-position attribute or passing options object to constructor. The setting consists of side and alignment string joined by hyphen.">side-alignment</span>
+        </li>
+        <li class="blocks__item">
+          <a class="btn" href="#" title="Tooltip is center aligned by default so you may provide only side setting." data-position="right-center">right-center</a>
+        </li>
+        <li class="blocks__item">
+          <a class="btn" href="#" title="This is example content. You can set it by adding title or data-tooltip attribute." data-position="left-end">left-end</a>
+        </li>
+        <li class="blocks__item">
+          <a class="btn" href="#" title="Tooltip is center aligned by default so you may provide only side setting." data-position="top">top</a>
+        </li>
+        <li class="blocks__item">
+          <a class="btn" href="#" title="This is example content. You can set it by adding title or data-tooltip attribute." data-position="right-end">right-end</a>
+        </li>
+        <li class="blocks__item">
+          <a class="btn" href="#" title="This is example content. You can set it by adding title or data-tooltip attribute." data-position="bottom-start">bottom-start</a>
+        </li>
+        <li class="blocks__item">
+          <a class="btn" href="#" title="This is example content. You can set it by adding title or data-tooltip attribute." data-position="bottom-center">bottom-center</a>
+        </li>
+        <li class="blocks__item">
+          <a class="btn" href="#" title="This is example content. You can set it by adding title or data-tooltip attribute." data-position="bottom-end">bottom-end</a>
         </li>
       </ul>
-    </div>
 
-    <a class="anchor anchor--left-top" href="#" title="Inline link title tooltip">Inline link</a>
-    <a class="anchor anchor--left-center" href="#" title="Inline link title tooltip">Inline link</a>
-    <a class="anchor anchor--left-bottom" href="#" title="Inline link title tooltip">Inline link</a>
-    <a class="anchor anchor--center-top" href="#" title="Inline link title tooltip">Inline link</a>
-    <a class="anchor anchor--center-bottom" href="#" title="Inline link title tooltip">Inline link</a>
-    <a class="anchor anchor--right-top" href="#" title="Inline link title tooltip">Inline link</a>
-    <a class="anchor anchor--right-center" href="#" title="Inline link title tooltip">Inline link</a>
-    <a class="anchor anchor--right-bottom" href="#" title="Inline link title tooltip">Inline link</a>
+      <a class="btn btn--ghost btn--left-top" href="#" title="This tooltip uses default top-center alignment but it also checks whether there is enough space - if not, the tooltip moves to the other side.">link</a>
+      <a class="btn btn--ghost btn--left-center" href="#" title="This tooltip uses default top-center alignment but it also checks whether there is enough space - if not, the tooltip moves to the other side.">link</a>
+      <a class="btn btn--ghost btn--left-bottom" href="#" title="This tooltip uses default top-center alignment but it also checks whether there is enough space - if not, the tooltip moves to the other side.">link</a>
+      <a class="btn btn--ghost btn--center-top" href="#" title="This tooltip uses default top-center alignment but it also checks whether there is enough space - if not, the tooltip moves to the other side.">link</a>
+      <a class="btn btn--ghost btn--center-bottom" href="#" title="This tooltip uses default top-center alignment but it also checks whether there is enough space - if not, the tooltip moves to the other side.">link</a>
+      <a class="btn btn--ghost btn--right-top" href="#" title="This tooltip uses default top-center alignment but it also checks whether there is enough space - if not, the tooltip moves to the other side.">link</a>
+      <a class="btn btn--ghost btn--right-center" href="#" title="This tooltip uses default top-center alignment but it also checks whether there is enough space - if not, the tooltip moves to the other side.">link</a>
+      <a class="btn btn--ghost btn--right-bottom" href="#" title="This tooltip uses default top-center alignment but it also checks whether there is enough space - if not, the tooltip moves to the other side.">link</a>
+    </div>
   </div>
 
   <script type="text/javascript" src="dist/tooltip.js"></script>
   <script type="text/javascript">
-    var myTooltip = new Tooltip();
+    var myTooltip = new Tooltip({ selector: '.btn' });
   </script>
 </body>
 </html>
