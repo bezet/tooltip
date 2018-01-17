@@ -76,69 +76,69 @@ class Tooltip {
     }
   }
 
-  calcPosition(elementRect, side, alignment) {
+  calcCoordinates(elementRect, position) {
     const tooltipBounding = this.tooltip.getBoundingClientRect();
     const elementBounding = elementRect;
     const pageScroll = Tooltip.getScroll();
 
-    const position = {
+    const coordinates = {
       x: pageScroll.x,
       y: pageScroll.y
     };
 
     // top & bottom
 
-    if ((side === 'top' || side === 'bottom')) {
-      if (alignment === 'start') {
-        position.x += elementBounding.left;
+    if ((position.side === 'top' || position.side === 'bottom')) {
+      if (position.alignment === 'start') {
+        coordinates.x += elementBounding.left;
       }
 
-      if (alignment === 'center') {
-        position.x +=
+      if (position.alignment === 'center') {
+        coordinates.x +=
           elementBounding.left +
           ((elementBounding.width / 2) - (tooltipBounding.width / 2));
       }
 
-      if (alignment === 'end') {
-        position.x += (elementBounding.right - tooltipBounding.width);
+      if (position.alignment === 'end') {
+        coordinates.x += (elementBounding.right - tooltipBounding.width);
       }
     }
 
-    if (side === 'top') {
-      position.y += (elementBounding.top - tooltipBounding.height - this.settings.margin);
+    if (position.side === 'top') {
+      coordinates.y += (elementBounding.top - tooltipBounding.height - this.settings.margin);
     }
 
-    if (side === 'bottom') {
-      position.y += (elementBounding.bottom + this.settings.margin);
+    if (position.side === 'bottom') {
+      coordinates.y += (elementBounding.bottom + this.settings.margin);
     }
 
     // left & right
 
-    if ((side === 'left' || side === 'right')) {
-      if (alignment === 'start') {
-        position.y += elementBounding.top;
+    if ((position.side === 'left' || position.side === 'right')) {
+      if (position.alignment === 'start') {
+        coordinates.y += elementBounding.top;
       }
 
-      if (alignment === 'center') {
-        position.y +=
+      if (position.alignment === 'center') {
+        coordinates.y +=
           elementBounding.top +
           ((elementBounding.height / 2) - (tooltipBounding.height / 2));
       }
 
-      if (alignment === 'end') {
-        position.y += elementBounding.bottom - tooltipBounding.height;
+      if (position.alignment === 'end') {
+        coordinates.y += elementBounding.bottom - tooltipBounding.height;
       }
     }
 
-    if (side === 'left') {
-      position.x += (elementBounding.left - this.settings.margin - tooltipBounding.width);
+    if (position.side === 'left') {
+      coordinates.x += (elementBounding.left - this.settings.margin - tooltipBounding.width);
     }
 
-    if (side === 'right') {
-      position.x += (elementBounding.right + this.settings.margin);
+    if (position.side === 'right') {
+      coordinates.x += (elementBounding.right + this.settings.margin);
     }
 
-    return position;
+    return coordinates;
   }
 
   checkVerticalSpace(elementBounding) {
@@ -163,36 +163,84 @@ class Tooltip {
 
   // check space on sides in the viewport
   getPossibleSides(elementBounding) {
-    // return Object.assign(
-    //   this.checkVerticalSpace(elementBounding),
-    //   this.checkHorizontalSpace(elementBounding)
-    // );
-
     return {
       vertical: this.checkVerticalSpace(elementBounding),
       horizontal: this.checkHorizontalSpace(elementBounding)
     };
   }
 
-  // compare desired & possible side space;
+  // compare desired position & possible space on sides;
   // if desired is not possible, return best possible position
-  getActualSide(desiredSide, possibleSides) {
-    let side = desiredSide;
+  getActualPosition(desired, possible) {
+    const positionMap = {
+      top: 'start',
+      bottom: 'end',
+      left: 'start',
+      right: 'end',
+    };
 
-    return side;
+    const oppositeMap = {
+      top: 'bottom',
+      bottom: 'top',
+      left: 'right',
+      right: 'left',
+      vertical: 'horizontal',
+      horizontal: 'vertical',
+    };
+
+    const axis = (
+      desired.side === 'top' || desired.side === 'bottom'
+    ) ? 'vertical' : 'horizontal';
+
+    const getSide = (wantedAxis, wantedSide) => {
+      const theAxis = possible[wantedAxis];
+      let side;
+
+      if (theAxis[positionMap[wantedSide]]) {
+        side = wantedSide;
+      } else if (theAxis[positionMap[oppositeMap[wantedSide]]]) {
+        side = oppositeMap[wantedSide];
+      } else {
+        side = getSide(oppositeMap[wantedAxis], wantedSide);
+      }
+
+      return side;
+    };
+
+    const getAlignment = (wantedAxis, wantedAlignment) => {
+      const possibleAlign = possible[wantedAxis];
+      let alignment;
+
+      if (possibleAlign.start && possibleAlign.end) {
+        alignment = wantedAlignment;
+      } else if (!possibleAlign.start && !possibleAlign.end) {
+        alignment = 'center';
+      } else if (!possibleAlign.start) {
+        alignment = 'start';
+      } else if (!possibleAlign.end) {
+        alignment = 'end';
+      }
+
+      return alignment;
+    };
+
+    return {
+      side: getSide(axis, desired.side),
+      alignment: getAlignment(oppositeMap[axis], desired.alignment)
+    };
   }
 
   setTooltipPosition(element) {
     const elementRect = element.getBoundingClientRect();
-    const desired = this.getDesiredPosition(element);
+    const desiredPosition = this.getDesiredPosition(element);
     const possibleSides = this.getPossibleSides(elementRect);
-    const side = this.getActualSide(desired.side, possibleSides);
-    const position = this.calcPosition(elementRect, side, desired.alignment);
+    const actualPosition = this.getActualPosition(desiredPosition, possibleSides);
+    const coordinates = this.calcCoordinates(elementRect, actualPosition);
 
-    this.tooltip.style.left = `${position.x}px`;
-    this.tooltip.style.top = `${position.y}px`;
+    this.tooltip.style.left = `${coordinates.x}px`;
+    this.tooltip.style.top = `${coordinates.y}px`;
 
-    this.setClass(`${side}-${desired.alignment}`);
+    this.setClass(`${actualPosition.side}-${actualPosition.alignment}`);
   }
 
   setTooltipContent(content) {
