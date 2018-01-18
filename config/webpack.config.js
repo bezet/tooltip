@@ -15,7 +15,7 @@ const pascalCase = (string) => {
 
 module.exports = {
   cache: true,
-  entry: path.resolve(__dirname, rootPath, 'src/index.js'),
+  entry: path.resolve(__dirname, rootPath, `src/${packageName}.js`),
   output: {
     path: path.resolve(__dirname, rootPath, 'dist'),
     filename: `${packageName}.js`,
