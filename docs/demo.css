@@ -441,12 +441,12 @@ template {
 
 ::selection {
   color: #eeeeee;
-  background: #e39774;
+  background: #326273;
 }
 
 ::-moz-selection {
   color: #eeeeee;
-  background: #e39774;
+  background: #326273;
 }
 
 html {
@@ -486,7 +486,7 @@ body {
   margin: 0;
   font-size: 3rem;
   line-height: .85;
-  color: #e39774;
+  color: #326273;
 }
 
 .lib-name span {
@@ -505,16 +505,16 @@ body {
   text-decoration: none;
   border-radius: 4px;
   color: white;
-  background: #326273;
-  border: 2px solid #326273;
+  background: #E39774;
+  border: 2px solid #E39774;
   transition: opacity .3s ease;
 }
 
 .btn--ghost {
   padding: 2px 24px;
-  color: #326273;
+  color: #E39774;
   background: transparent;
-  border: 2px solid #326273;
+  border: 2px solid #E39774;
   box-shadow: none;
 }
 
@@ -610,4 +610,9 @@ body {
   font-size: 1.4rem;
   line-height: 1.4;
   font-family: 'Ubuntu', sans-serif;
+  background: #326273;
+}
+
+.tooltip:before {
+  background-color: #326273;
 }
