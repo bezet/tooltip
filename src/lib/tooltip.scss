@@ -1,32 +1,23 @@
 $tooltipBg: #333;
+$tooltipColor:
 $tooltipArrowHeight: 4px;
 
-@mixin arrow($direction: 'up', $height: $tooltipArrowHeight, $color: $tooltipBg) {
-  border: $height solid transparent;
+@mixin arrow-position(
+  $position: 'bottom-center',
+  $height: $tooltipArrowHeight,
+  $color: $tooltipBg
+) {
 
-  @if $direction == 'up' {
-    border-bottom-color: $color;
-    border-top-width: 0;
-
-  } @else if $direction == 'down' {
-    border-top-color: $color;
-    border-bottom-width: 0;
-
-  } @else if $direction == 'left' {
-    border-right-color: $color;
-    border-left-width: 0;
-
-  } @else if $direction == 'right' {
-    border-left-color: $color;
-    border-right-width: 0;
-  }
-}
-
-@mixin arrow-position($position: 'bottom-center', $height: $tooltipArrowHeight) {
   &:before {
     content: "";
+    z-index: -1;
     display: block;
     position: absolute;
+    width: 10px;
+    height: 10px;
+    background: $color;
+    transform-origin: center;
+    transform: rotate(45deg);
 
     @if $position == 'bottom-center' {
       top: unset;
@@ -34,21 +25,18 @@ $tooltipArrowHeight: 4px;
       bottom: -$height;
       left: 50%;
       margin-left: -$height;
-      @include arrow('down');
 
     } @else if $position == 'bottom-left' {
       top: unset;
       right: unset;
       bottom: -$height;
       left: 10px;
-      @include arrow('down');
 
     } @else if $position == 'bottom-right' {
       top: unset;
       left: unset;
       bottom: -$height;
       right: 10px;
-      @include arrow('down');
 
     } @else if $position == 'top-center' {
       bottom: unset;
@@ -56,21 +44,18 @@ $tooltipArrowHeight: 4px;
       top: -$height;
       left: 50%;
       margin-left: -$height;
-      @include arrow('up');
 
     } @else if $position == 'top-left' {
       bottom: unset;
       right: unset;
       top: -$height;
       left: 10px;
-      @include arrow('up');
 
     } @else if $position == 'top-right' {
       bottom: unset;
       left: unset;
       top: -$height;
       right: 10px;
-      @include arrow('up');
 
     } @else if $position == 'right-center' {
       bottom: unset;
@@ -79,7 +64,6 @@ $tooltipArrowHeight: 4px;
       right: -$height;
       margin-top: -$height;
       margin-left: 0;
-      @include arrow('right');
 
     } @else if $position == 'right-top' {
       bottom: unset;
@@ -88,7 +72,6 @@ $tooltipArrowHeight: 4px;
       right: -$height;
       margin-top: 0;
       margin-left: 0;
-      @include arrow('right');
 
     } @else if $position == 'right-bottom' {
       left: unset;
@@ -97,7 +80,6 @@ $tooltipArrowHeight: 4px;
       right: -$height;
       margin-top: 0;
       margin-left: 0;
-      @include arrow('right');
 
     } @else if $position == 'left-center' {
       bottom: unset;
@@ -106,7 +88,6 @@ $tooltipArrowHeight: 4px;
       left: -$height;
       margin-top: -$height;
       margin-left: 0;
-      @include arrow('left');
 
     } @else if $position == 'left-top' {
       bottom: unset;
@@ -115,7 +96,6 @@ $tooltipArrowHeight: 4px;
       left: -$height;
       margin-top: 0;
       margin-left: 0;
-      @include arrow('left');
 
     } @else if $position == 'left-bottom' {
       top: unset;
@@ -124,7 +104,6 @@ $tooltipArrowHeight: 4px;
       left: -$height;
       margin-top: 0;
       margin-left: 0;
-      @include arrow('left');
     }
   }
 }
@@ -140,7 +119,7 @@ $tooltipArrowHeight: 4px;
   line-height: 1;
   font-family: sans-serif;
   border-radius: 2px;
-  color: #ddd;
+  color: $tooltipColor;
   background: $tooltipBg;
   opacity: 0;
   transition: opacity .3s ease;
