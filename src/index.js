@@ -1,3 +1,3 @@
-import Tooltip from './lib/tooltip';
+import Tooltip from './tooltip';
 
 export default Tooltip;
