@@ -268,7 +268,8 @@ class Tooltip {
   }
 
   createTooltipData() {
-    [...this.tooltippedElements].forEach((element) => {
+    [...this.tooltippedElements].forEach((el) => {
+      const element = el;
       const elementHas = Tooltip.elHasNonEmptyAttr(element);
 
       if (elementHas('title') && !elementHas('data-tooltip')) {
