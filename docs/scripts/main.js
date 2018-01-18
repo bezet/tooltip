@@ -1,0 +1,1 @@
+import '@bezet/tooltip';
