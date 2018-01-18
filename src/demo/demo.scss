@@ -33,8 +33,10 @@
 // $color4: rgba(225, 244, 203, 1);
 // $color5: rgba(241, 191, 152, 1);
 
-$color1: rgba(227, 151, 116, 1);
-$color2: rgba(50, 98, 115, 1);
+// $color1: rgba(227, 151, 116, 1);
+// $color2: rgba(50, 98, 115, 1);
+$color1: #326273;
+$color2: #E39774;
 $color3: rgba(92, 158, 173, 1);
 $color4: rgba(238, 238, 238, 1);
 $color5: rgba(255, 255, 255, 1);
@@ -217,4 +219,9 @@ body {
   font-size: 1.4rem;
   line-height: 1.4;
   font-family: 'Ubuntu', sans-serif;
+  background: $color1;
+
+  &:before {
+    border-color: $color1;
+  }
 }
