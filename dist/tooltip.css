@@ -2,7 +2,7 @@
   display: block;
   z-index: 999;
   position: fixed;
-  left: -100%;
+  max-width: 15em;
   padding: .5em;
   margin: 0;
   font-size: 1rem;
@@ -17,87 +17,111 @@
 
 .tooltip:before {
   content: "";
+  z-index: -1;
   display: block;
   position: absolute;
-  top: unset;
-  right: unset;
-  bottom: -4px;
-  left: 50%;
-  margin-left: -4px;
-  border: 4px solid transparent;
-  border-top-color: #333;
-  border-bottom-width: 0;
-}
-
-.tooltip--top-left:before {
-  content: "";
-  display: block;
-  position: absolute;
-  top: unset;
-  right: unset;
-  bottom: -4px;
-  left: 10px;
-  border: 4px solid transparent;
-  border-top-color: #333;
-  border-bottom-width: 0;
-}
-
-.tooltip--top-right:before {
-  content: "";
-  display: block;
-  position: absolute;
-  top: unset;
-  left: unset;
-  bottom: -4px;
-  right: 10px;
-  border: 4px solid transparent;
-  border-top-color: #333;
-  border-bottom-width: 0;
-}
-
-.tooltip--bottom-center:before {
-  content: "";
-  display: block;
-  position: absolute;
-  bottom: unset;
-  right: unset;
-  top: -4px;
-  left: 50%;
-  margin-left: -4px;
-  border: 4px solid transparent;
-  border-bottom-color: #333;
-  border-top-width: 0;
-}
-
-.tooltip--bottom-left:before {
-  content: "";
-  display: block;
-  position: absolute;
-  bottom: unset;
-  right: unset;
-  top: -4px;
-  left: 10px;
-  border: 4px solid transparent;
-  border-bottom-color: #333;
-  border-top-width: 0;
-}
-
-.tooltip--bottom-right:before {
-  content: "";
-  display: block;
-  position: absolute;
-  bottom: unset;
-  left: unset;
-  top: -4px;
-  right: 10px;
-  border: 4px solid transparent;
-  border-bottom-color: #333;
-  border-top-width: 0;
+  width: 10px;
+  height: 10px;
+  background: #333;
+  -webkit-transform-origin: center;
+      -ms-transform-origin: center;
+          transform-origin: center;
+  -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
 }
 
 .tooltip--visible {
   position: absolute;
   opacity: 1;
+}
+
+.tooltip--top-center:before {
+  top: unset;
+  right: unset;
+  bottom: -5px;
+  left: 50%;
+  margin-left: -5px;
+}
+
+.tooltip--top-start:before {
+  top: unset;
+  right: unset;
+  bottom: -5px;
+  left: 10px;
+}
+
+.tooltip--top-end:before {
+  top: unset;
+  left: unset;
+  bottom: -5px;
+  right: 10px;
+}
+
+.tooltip--bottom-center:before {
+  bottom: unset;
+  right: unset;
+  top: -5px;
+  left: 50%;
+  margin-left: -5px;
+}
+
+.tooltip--bottom-start:before {
+  bottom: unset;
+  right: unset;
+  top: -5px;
+  left: 10px;
+}
+
+.tooltip--bottom-end:before {
+  bottom: unset;
+  left: unset;
+  top: -5px;
+  right: 10px;
+}
+
+.tooltip--left-center:before {
+  bottom: unset;
+  left: unset;
+  top: 50%;
+  right: -5px;
+  margin-top: -5px;
+}
+
+.tooltip--left-start:before {
+  bottom: unset;
+  left: unset;
+  top: 10px;
+  right: -5px;
+}
+
+.tooltip--left-end:before {
+  left: unset;
+  top: unset;
+  bottom: 10px;
+  right: -5px;
+}
+
+.tooltip--right-center:before {
+  bottom: unset;
+  right: unset;
+  top: 50%;
+  left: -5px;
+  margin-top: -5px;
+}
+
+.tooltip--right-start:before {
+  bottom: unset;
+  right: unset;
+  top: 10px;
+  left: -5px;
+}
+
+.tooltip--right-end:before {
+  top: unset;
+  right: unset;
+  bottom: 10px;
+  left: -5px;
 }
 
 /*# sourceMappingURL=tooltip.css.map */

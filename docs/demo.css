@@ -433,16 +433,20 @@ template {
   display: none;
 }
 
+/* Coolors Exported Palette - coolors.co/2d3142-4f5d75-bfc0c0-ffffff-ef8354 */
+/* RGB */
 *, *:before, *:after {
   box-sizing: border-box;
 }
 
 ::selection {
-  background: #f9f7f7;
+  color: #eeeeee;
+  background: #326273;
 }
 
 ::-moz-selection {
-  background: #f9f7f7;
+  color: #eeeeee;
+  background: #326273;
 }
 
 html {
@@ -453,79 +457,95 @@ html {
 body {
   position: relative;
   width: 100%;
-  height: 100vh;
-  min-height: 720px;
-  background: #7a7a7a;
+  background: #5c9ead;
 }
 
 .wrapper {
   width: 100%;
-  max-width: 1080px;
   height: 100%;
+  padding: 0;
   margin: 0 auto;
-  padding: 0 4px;
 }
 
 .inner-column {
+  position: relative;
   height: 100%;
-  padding: 40px 20px;
+  min-height: 100vh;
+  padding: 18px 18px 80px;
   text-align: center;
-  background: #ffffff;
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  background: #eeeeee;
+}
+
+.site-header {
+  padding: 60px 0 40px;
 }
 
 .lib-name {
-  padding: 40px 0;
+  display: inline-block;
+  padding: 0;
   margin: 0;
-  color: #7a7a7a;
+  font-size: 3rem;
+  line-height: .85;
+  color: #326273;
 }
 
-.anchor {
+.lib-name span {
+  display: block;
+  font-size: .5em;
+  font-weight: normal;
+  text-align: left;
+}
+
+.btn {
   display: inline-block;
-  padding: 2px 12px;
+  padding: 6px 24px;
   margin-bottom: 2px;
   font-size: 1.5rem;
   line-height: 1.5;
   text-decoration: none;
   border-radius: 4px;
-  color: #f9f7f7;
-  background: #ff8080;
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  color: white;
+  background: #E39774;
+  border: 2px solid #E39774;
   transition: opacity .3s ease;
+}
+
+.btn--ghost {
+  padding: 2px 24px;
+  color: #E39774;
+  background: transparent;
+  border: 2px solid #E39774;
+  box-shadow: none;
 }
 
 .blocks {
   width: 100%;
-  max-width: 480px;
+  max-width: 640px;
   padding: 5px;
-  margin: 20px auto;
+  margin: 0 auto;
   list-style: none;
   font-size: 0;
 }
 
 .blocks__item {
   display: inline-block;
-  width: 50%;
+  width: 33%;
   padding: 5px;
 }
 
-.anchor--block {
-  display: block;
-  float: left;
+.blocks__item .btn {
   width: 100%;
-  height: 0;
-  padding-bottom: 100%;
-  background: #ff8080;
+  padding: 24px 12px;
 }
 
-.anchor--left-top,
-.anchor--left-center,
-.anchor--left-bottom,
-.anchor--center-top,
-.anchor--center-bottom,
-.anchor--right-top,
-.anchor--right-center,
-.anchor--right-bottom {
+.btn--left-top,
+.btn--left-center,
+.btn--left-bottom,
+.btn--center-top,
+.btn--center-bottom,
+.btn--right-top,
+.btn--right-center,
+.btn--right-bottom {
   position: absolute;
   left: unset;
   right: unset;
@@ -533,20 +553,20 @@ body {
   bottom: unset;
 }
 
-.anchor--center-top,
-.anchor--center-bottom {
+.btn--center-top,
+.btn--center-bottom {
   left: 50%;
   -webkit-transform: translate(-50%, 0);
       -ms-transform: translate(-50%, 0);
           transform: translate(-50%, 0);
 }
 
-.anchor--left-top {
+.btn--left-top {
   top: 4px;
   left: 4px;
 }
 
-.anchor--left-center {
+.btn--left-center {
   top: 50%;
   left: 4px;
   -webkit-transform: translate(0, -50%);
@@ -554,25 +574,25 @@ body {
           transform: translate(0, -50%);
 }
 
-.anchor--left-bottom {
+.btn--left-bottom {
   bottom: 4px;
   left: 4px;
 }
 
-.anchor--center-top {
+.btn--center-top {
   top: 4px;
 }
 
-.anchor--center-bottom {
+.btn--center-bottom {
   bottom: 4px;
 }
 
-.anchor--right-top {
+.btn--right-top {
   top: 4px;
   right: 4px;
 }
 
-.anchor--right-center {
+.btn--right-center {
   top: 50%;
   right: 4px;
   -webkit-transform: translate(0, -50%);
@@ -580,29 +600,19 @@ body {
           transform: translate(0, -50%);
 }
 
-.anchor--right-bottom {
+.btn--right-bottom {
   bottom: 4px;
   right: 4px;
 }
 
 .tooltip {
   padding: 8px 12px;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  line-height: 1.4;
   font-family: 'Ubuntu', sans-serif;
+  background: #326273;
 }
 
-.tooltip-content {
-  display: none;
-}
-
-.tooltip-content p {
-  margin: 0 0 6px;
-}
-
-.tooltip-content ul {
-  padding: 0;
-  margin: 0 0 6px;
-  font-size: 1em;
-  list-style: disc;
-  list-style-position: inside;
+.tooltip:before {
+  background-color: #326273;
 }

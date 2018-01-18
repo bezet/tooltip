@@ -1,136 +1,126 @@
-@mixin arrow($direction: 'up', $height: 10px, $color: #333) {
-  border: $height solid transparent;
-
-  @if $direction == 'up' {
-    border-bottom-color: $color;
-    border-top-width: 0;
-
-  } @else if $direction == 'down' {
-    border-top-color: $color;
-    border-bottom-width: 0;
-
-  } @else if $direction == 'left' {
-    border-right-color: $color;
-    border-left-width: 0;
-
-  } @else if $direction == 'right' {
-    border-left-color: $color;
-    border-right-width: 0;
-  }
-}
-
-@mixin tooltip-arrow($position: 'top-center', $height: 10px, $color: #333) {
-  &:before {
-    content: "";
-    display: block;
-    position: absolute;
-
-    @if $position == 'top-center' {
-      bottom: unset;
-      right: unset;
-      top: -$height;
-      left: 50%;
-      margin-left: -$height;
-      @include arrow('up', $height, $color);
-
-    } @else if $position == 'bottom-center' {
-      top: unset;
-      right: unset;
-      bottom: -$height;
-      left: 50%;
-      margin-left: -$height;
-      @include arrow('down', $height, $color);
-
-    } @else if $position == 'left-center' {
-      bottom: unset;
-      right: unset;
-      top: 50%;
-      left: -$height;
-      margin-top: -$height;
-      @include arrow('left', $height, $color);
-
-    } @else if $position == 'right-center' {
-      bottom: unset;
-      left: unset;
-      top: 50%;
-      right: -$height;
-      margin-top: -$height;
-      @include arrow('right', $height, $color);
-
-    } @else if $position == 'top-left' {
-      bottom: unset;
-      right: unset;
-      top: -$height;
-      left: 10px;
-      @include arrow('up', $height, $color);
-
-    } @else if $position == 'top-right' {
-      bottom: unset;
-      left: unset;
-      top: -$height;
-      right: 10px;
-      @include arrow('up', $height, $color);
-
-    } @else if $position == 'bottom-left' {
-      top: unset;
-      right: unset;
-      bottom: -$height;
-      left: 10px;
-      @include arrow('down', $height, $color);
-
-    } @else if $position == 'bottom-right' {
-      top: unset;
-      left: unset;
-      bottom: -$height;
-      right: 10px;
-      @include arrow('down', $height, $color);
-    }
-  }
-}
-
 $tooltipBg: #333;
-$tooltipArrowHeight: 4px;
+$tooltipColor: #ddd;
+$arrowHeight: 5px;
+$arrElementHeight: $arrowHeight * 2;
 
 .tooltip {
   display: block;
   z-index: 999;
   position: fixed;
-  left: -100%;
+  max-width: 15em;
   padding: .5em;
   margin: 0;
   font-size: 1rem;
   line-height: 1;
   font-family: sans-serif;
   border-radius: 2px;
-  color: #ddd;
+  color: $tooltipColor;
   background: $tooltipBg;
   opacity: 0;
   transition: opacity .3s ease;
 
-  @include tooltip-arrow('bottom-center', $tooltipArrowHeight, $tooltipBg);
-}
-
-.tooltip--top-left {
-  @include tooltip-arrow('bottom-left', $tooltipArrowHeight, $tooltipBg);
-}
-
-.tooltip--top-right {
-  @include tooltip-arrow('bottom-right', $tooltipArrowHeight, $tooltipBg);
-}
-
-.tooltip--bottom-center {
-  @include tooltip-arrow('top-center', $tooltipArrowHeight, $tooltipBg);
-}
-
-.tooltip--bottom-left {
-  @include tooltip-arrow('top-left', $tooltipArrowHeight, $tooltipBg);
-}
-
-.tooltip--bottom-right {
-  @include tooltip-arrow('top-right', $tooltipArrowHeight, $tooltipBg);
+  &:before {
+    content: "";
+    z-index: -1;
+    display: block;
+    position: absolute;
+    width: $arrElementHeight;
+    height: $arrElementHeight;
+    background: $tooltipBg;
+    transform-origin: center;
+    transform: rotate(45deg);
+  }
 }
 
 .tooltip--visible {
   position: absolute;
   opacity: 1;
+}
+
+.tooltip--top-center:before {
+  top: unset;
+  right: unset;
+  bottom: -$arrowHeight;
+  left: 50%;
+  margin-left: -$arrowHeight;
+}
+
+.tooltip--top-start:before {
+  top: unset;
+  right: unset;
+  bottom: -$arrowHeight;
+  left: 10px;
+}
+
+.tooltip--top-end:before {
+  top: unset;
+  left: unset;
+  bottom: -$arrowHeight;
+  right: 10px;
+}
+
+.tooltip--bottom-center:before {
+  bottom: unset;
+  right: unset;
+  top: -$arrowHeight;
+  left: 50%;
+  margin-left: -$arrowHeight;
+}
+
+.tooltip--bottom-start:before {
+  bottom: unset;
+  right: unset;
+  top: -$arrowHeight;
+  left: 10px;
+}
+
+.tooltip--bottom-end:before {
+  bottom: unset;
+  left: unset;
+  top: -$arrowHeight;
+  right: 10px;
+}
+
+.tooltip--left-center:before {
+  bottom: unset;
+  left: unset;
+  top: 50%;
+  right: -$arrowHeight;
+  margin-top: -$arrowHeight;
+}
+
+.tooltip--left-start:before {
+  bottom: unset;
+  left: unset;
+  top: 10px;
+  right: -$arrowHeight;
+}
+
+.tooltip--left-end:before {
+  left: unset;
+  top: unset;
+  bottom: 10px;
+  right: -$arrowHeight;
+}
+
+.tooltip--right-center:before {
+  bottom: unset;
+  right: unset;
+  top: 50%;
+  left: -$arrowHeight;
+  margin-top: -$arrowHeight;
+}
+
+.tooltip--right-start:before {
+  bottom: unset;
+  right: unset;
+  top: 10px;
+  left: -$arrowHeight;
+}
+
+.tooltip--right-end:before {
+  top: unset;
+  right: unset;
+  bottom: 10px;
+  left: -$arrowHeight;
 }
