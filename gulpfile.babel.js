@@ -31,7 +31,7 @@ paths.base = {
 };
 
 paths.js = {
-  srcMain : [`${paths.base.src}/index.js`],
+  srcMain : [`${paths.base.src}/${packageName}.js`],
   src     : [`${paths.base.src}/lib/*{.js,/*.js}`],
   dest    :  `${paths.base.dest}`
 };
@@ -42,11 +42,11 @@ paths.styles = {
 };
 
 paths.demo = {
-  html   : [`${paths.base.src}/demo/*{.html,/*.html}`],
-  scss   : [`${paths.base.src}/demo/*{.scss,/*.scss}`],
-  images : [`${paths.base.src}/demo/images/*.{png,jpg,gif,svg}`],
-  libSrc :  `${paths.base.dest}`,
-  dest   :  `${paths.base.demo}`
+  scssMain : [`${paths.base.demo}/styles/main.scss}`],
+  scss     : [`${paths.base.demo}/styles/*{.scss,/*.scss}`],
+  jsMain   :  `${paths.base.demo}/scripts/main.js}`,
+  js       :  `${paths.base.demo}/scripts/*{.js,/*.js}`,
+  dest     :  `${paths.base.demo}`
 };
 
 
@@ -77,24 +77,20 @@ gulp.task('argv-test', () => {
 
 // demo
 
-gulp.task('demo:html', () => {
-  return gulp.src(paths.demo.html)
-    .pipe(gulp.dest(paths.demo.dest));
-});
-
 gulp.task('demo:styles', () => {
-  return gulp.src(paths.demo.scss)
+  return gulp.src(paths.demo.scssMain)
     .pipe(sass(sassOptions).on('error', sass.logError))
     .pipe(postcss(postcssPlugins))
     .pipe(gulp.dest(paths.demo.dest));
 });
 
-gulp.task('demo:lib', () => {
-  return gulp.src(`${paths.demo.libSrc}/**/*`)
-    .pipe(gulp.dest(`${paths.demo.dest}/dist`));
+gulp.task('demo:js', () => {
+  return gulp.src(paths.demo.jsMain)
+    .pipe(webpack(require('./config/webpack.demo.js')))
+    .pipe(gulp.dest(paths.js.dest));
 });
 
-gulp.task('demo', ['demo:html', 'demo:styles', 'demo:lib']);
+gulp.task('demo', ['demo:styles', 'demo:js']);
 
 
 
@@ -141,15 +137,20 @@ gulp.task('build', () => {
 
 gulp.task('watch', ['build'], () => {
   gulp.watch(paths.js.srcMain.concat(paths.js.src), () => {
-    runSequence('build:js', 'demo:lib');
+    runSequence('build:js');
+  });
+
+  gulp.watch(paths.demo.js, () => {
+    runSequence('demo:js');
   });
 
   gulp.watch(paths.styles.src, () => {
-    runSequence('build:styles', 'demo:lib');
+    runSequence('build:styles');
   });
 
-  gulp.watch(paths.demo.html, ['demo:html']);
-  gulp.watch(paths.demo.scss, ['demo:styles']);
+  gulp.watch(paths.demo.scss, () => {
+    runSequence('demo:styles');
+  });
 
   // gulp.watch(`${paths.demo.dest}/**/*`).on('change', browserSyncInstance.reload);
 });
