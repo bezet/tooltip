@@ -1,112 +1,7 @@
 $tooltipBg: #333;
-$tooltipColor:
-$tooltipArrowHeight: 4px;
-
-@mixin arrow-position(
-  $position: 'bottom-center',
-  $height: $tooltipArrowHeight,
-  $color: $tooltipBg
-) {
-
-  &:before {
-    content: "";
-    z-index: -1;
-    display: block;
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: $color;
-    transform-origin: center;
-    transform: rotate(45deg);
-
-    @if $position == 'bottom-center' {
-      top: unset;
-      right: unset;
-      bottom: -$height;
-      left: 50%;
-      margin-left: -$height;
-
-    } @else if $position == 'bottom-left' {
-      top: unset;
-      right: unset;
-      bottom: -$height;
-      left: 10px;
-
-    } @else if $position == 'bottom-right' {
-      top: unset;
-      left: unset;
-      bottom: -$height;
-      right: 10px;
-
-    } @else if $position == 'top-center' {
-      bottom: unset;
-      right: unset;
-      top: -$height;
-      left: 50%;
-      margin-left: -$height;
-
-    } @else if $position == 'top-left' {
-      bottom: unset;
-      right: unset;
-      top: -$height;
-      left: 10px;
-
-    } @else if $position == 'top-right' {
-      bottom: unset;
-      left: unset;
-      top: -$height;
-      right: 10px;
-
-    } @else if $position == 'right-center' {
-      bottom: unset;
-      left: unset;
-      top: 50%;
-      right: -$height;
-      margin-top: -$height;
-      margin-left: 0;
-
-    } @else if $position == 'right-top' {
-      bottom: unset;
-      left: unset;
-      top: 10px;
-      right: -$height;
-      margin-top: 0;
-      margin-left: 0;
-
-    } @else if $position == 'right-bottom' {
-      left: unset;
-      top: unset;
-      bottom: 10px;
-      right: -$height;
-      margin-top: 0;
-      margin-left: 0;
-
-    } @else if $position == 'left-center' {
-      bottom: unset;
-      right: unset;
-      top: 50%;
-      left: -$height;
-      margin-top: -$height;
-      margin-left: 0;
-
-    } @else if $position == 'left-top' {
-      bottom: unset;
-      right: unset;
-      top: 10px;
-      left: -$height;
-      margin-top: 0;
-      margin-left: 0;
-
-    } @else if $position == 'left-bottom' {
-      top: unset;
-      right: unset;
-      bottom: 10px;
-      left: -$height;
-      margin-top: 0;
-      margin-left: 0;
-    }
-  }
-}
+$tooltipColor: #ddd;
+$arrowHeight: 5px;
+$arrElementHeight: $arrowHeight * 2;
 
 .tooltip {
   display: block;
@@ -124,54 +19,108 @@ $tooltipArrowHeight: 4px;
   opacity: 0;
   transition: opacity .3s ease;
 
-  @include arrow-position('bottom-center');
-}
-
-.tooltip--top-start {
-  @include arrow-position('bottom-left');
-}
-
-.tooltip--top-end {
-  @include arrow-position('bottom-right');
-}
-
-.tooltip--bottom-center {
-  @include arrow-position('top-center');
-}
-
-.tooltip--bottom-start {
-  @include arrow-position('top-left');
-}
-
-.tooltip--bottom-end {
-  @include arrow-position('top-right');
-}
-
-.tooltip--left-center {
-  @include arrow-position('right-center');
-}
-
-.tooltip--left-start {
-  @include arrow-position('right-top');
-}
-
-.tooltip--left-end {
-  @include arrow-position('right-bottom');
-}
-
-.tooltip--right-center {
-  @include arrow-position('left-center');
-}
-
-.tooltip--right-start {
-  @include arrow-position('left-top');
-}
-
-.tooltip--right-end {
-  @include arrow-position('left-bottom');
+  &:before {
+    content: "";
+    z-index: -1;
+    display: block;
+    position: absolute;
+    width: $arrElementHeight;
+    height: $arrElementHeight;
+    background: $tooltipBg;
+    transform-origin: center;
+    transform: rotate(45deg);
+  }
 }
 
 .tooltip--visible {
   position: absolute;
   opacity: 1;
+}
+
+.tooltip--top-center:before {
+  top: unset;
+  right: unset;
+  bottom: -$arrowHeight;
+  left: 50%;
+  margin-left: -$arrowHeight;
+}
+
+.tooltip--top-start:before {
+  top: unset;
+  right: unset;
+  bottom: -$arrowHeight;
+  left: 10px;
+}
+
+.tooltip--top-end:before {
+  top: unset;
+  left: unset;
+  bottom: -$arrowHeight;
+  right: 10px;
+}
+
+.tooltip--bottom-center:before {
+  bottom: unset;
+  right: unset;
+  top: -$arrowHeight;
+  left: 50%;
+  margin-left: -$arrowHeight;
+}
+
+.tooltip--bottom-start:before {
+  bottom: unset;
+  right: unset;
+  top: -$arrowHeight;
+  left: 10px;
+}
+
+.tooltip--bottom-end:before {
+  bottom: unset;
+  left: unset;
+  top: -$arrowHeight;
+  right: 10px;
+}
+
+.tooltip--left-center:before {
+  bottom: unset;
+  left: unset;
+  top: 50%;
+  right: -$arrowHeight;
+  margin-top: -$arrowHeight;
+}
+
+.tooltip--left-start:before {
+  bottom: unset;
+  left: unset;
+  top: 10px;
+  right: -$arrowHeight;
+}
+
+.tooltip--left-end:before {
+  left: unset;
+  top: unset;
+  bottom: 10px;
+  right: -$arrowHeight;
+}
+
+.tooltip--right-center:before {
+  bottom: unset;
+  right: unset;
+  top: 50%;
+  left: -$arrowHeight;
+  margin-top: -$arrowHeight;
+}
+
+.tooltip--right-start:before {
+  bottom: unset;
+  right: unset;
+  top: 10px;
+  left: -$arrowHeight;
+}
+
+.tooltip--right-end:before {
+  top: unset;
+  right: unset;
+  bottom: 10px;
+  left: -$arrowHeight;
 }
