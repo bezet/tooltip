@@ -17,6 +17,8 @@
     "build": "npm run build:prod",
     "serve": "gulp serve",
     "test": "mocha --require babel-core/register",
+    "link": "npm link && cd docs && npm link @bezet/tooltip && cd ..",
+    "install:all": "npm i && cd docs && npm i && cd ..",
     "start": "gulp"
   },
   "devDependencies": {
