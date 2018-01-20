@@ -1,18 +1,15 @@
-# baza-tooltip [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> This is a simple library that creates custom tooltips on given elements (anchors by default).
+# tooltip [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
+> A simple library that creates custom tooltips on given elements (anchors by default).
+
+[DEMO](https://bezet.github.io/tooltip/)
 
 ## Installation
 
-We assume you have pre-installed [node.js](https://nodejs.org/).
-
 You should install baza-tooltip using [npm](https://www.npmjs.com/):
 ```bash
-npm i -D baza-tooltip
+npm i -D @bezet/tooltip
 ```
-Or [yarn](https://yarnpkg.com/en):
-```bash
-yarn add baza-tooltip
-```
+
 
 ## Usage
 ### Add styles
@@ -21,13 +18,13 @@ yarn add baza-tooltip
 ### Add JS
 Either
 ```
-import Tooltip from 'baza-tooltip';
+import Tooltip from '@bezet/tooltip';
 const myTooltip = new Tooltip('a');
 ```
 
 or
 ```
-<script type="text/javascript" src="dist/Tooltip.js"></script>
+<script type="text/javascript" src="dist/tooltip.js"></script>
 <script type="text/javascript">
     var myTooltip = new Tooltip('a');
 </script>
