@@ -9,5 +9,8 @@
   },
   "scripts": {
     "test": ""
+  },
+  "devDependencies": {
+    "normalize.css": "^7.0.0"
   }
 }

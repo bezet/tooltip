@@ -36,7 +36,6 @@
     "gulp-sourcemaps": "^2.6.1",
     "mocha": "^4.0.1",
     "node-sass": "^4.7.2",
-    "normalize.css": "^7.0.0",
     "parallelshell": "^3.0.2",
     "run-sequence": "^2.2.0",
     "uglifyjs-webpack-plugin": "^1.1.1",
