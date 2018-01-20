@@ -8,8 +8,8 @@
     "url": "https://github.com/bezet"
   },
   "main": "dist/tooltip.js",
-  "jsnext:main": "src/lib/Tooltip.js",
-  "module": "src/lib/Tooltip.js",
+  "jsnext:main": "src/tooltip.js",
+  "module": "src/tooltip.js",
   "scripts": {
     "demo": "gulp demo",
     "build:dev": "gulp build",
