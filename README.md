@@ -5,9 +5,8 @@
 
 ## Installation
 
-You should install baza-tooltip using [npm](https://www.npmjs.com/):
 ```bash
-npm i -D @bezet/tooltip
+npm i @bezet/tooltip
 ```
 
 
