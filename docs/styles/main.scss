@@ -1,37 +1,5 @@
 @import 'normalize.css/normalize';
-
-/* Coolors Exported Palette - coolors.co/2d3142-4f5d75-bfc0c0-ffffff-ef8354 */
-
-/* RGB */
-// $color1: rgb(45, 49, 66);
-// $color2: rgb(79, 93, 117);
-// $color3: rgb(191, 192, 192);
-// $color4: rgb(255, 255, 255);
-// $color5: rgb(239, 131, 84);
-
-// $color1: rgba(252, 170, 103, 1);
-// $color2: rgba(176, 65, 62, 1);
-// $color3: rgba(255, 255, 199, 1);
-// $color4: rgba(84, 134, 135, 1);
-// $color5: rgba(71, 51, 53, 1);
-
-// $color1: rgba(114, 87, 82, 1);
-// $color2: rgba(135, 142, 136, 1);
-// $color3: rgba(150, 192, 183, 1);
-// $color4: rgba(212, 223, 199, 1);
-// $color5: rgba(254, 246, 201, 1);
-
-// $color1: rgba(12, 18, 12, 1);
-// $color2: rgba(194, 1, 20, 1);
-// $color3: rgba(109, 114, 117, 1);
-// $color4: rgba(199, 214, 213, 1);
-// $color5: rgba(236, 235, 243, 1);
-
-// $color1: rgba(63, 71, 57, 1);
-// $color2: rgba(113, 117, 104, 1);
-// $color3: rgba(186, 203, 169, 1);
-// $color4: rgba(225, 244, 203, 1);
-// $color5: rgba(241, 191, 152, 1);
+@import '../../dist/tooltip';
 
 // $color1: rgba(227, 151, 116, 1);
 // $color2: rgba(50, 98, 115, 1);
@@ -135,22 +103,35 @@ body {
 .blocks {
   width: 100%;
   max-width: 640px;
-  padding: 5px;
+  padding: 0;
   margin: 0 auto;
   list-style: none;
   font-size: 0;
+
+  &:nth-of-type(2),
+  &:nth-of-type(4) {
+    max-width: 700px;
+  }
+
+  &:nth-of-type(3) {
+    max-width: 760px;
+  }
 }
 
 .blocks__item {
   display: inline-block;
-  width: 33%;
-  padding: 5px;
+  width: calc(100% / 3);
+  padding: 10px;
 }
 
 .blocks__item .btn {
   width: 100%;
-  // padding: 30px 12px;
   padding: 24px 12px;
+
+  @media screen and (max-width: 1024px) {
+    padding: 24px 0;
+    font-size: 1rem;
+  }
 }
 
 .btn--left-top,
@@ -166,6 +147,10 @@ body {
   right: unset;
   top: unset;
   bottom: unset;
+
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
 }
 
 .btn--center-top,

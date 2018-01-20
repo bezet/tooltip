@@ -14,8 +14,8 @@ import runSequence from 'run-sequence';
 import packageInfo from './package.json';
 
 const PRODUCTION = argv.production ? true : false;
-// const packageName = (packageInfo.name).match(/(?:@\w+\/)(\w+)/g);
 const packageName = (packageInfo.name).split('/')[1];
+
 
 
 // PATHS
@@ -25,28 +25,28 @@ const paths = {};
 paths.root = '.';
 
 paths.base = {
-  src  : [`${paths.root}/src`],
-  dest :  `${paths.root}/dist`,
-  demo :  `${paths.root}/docs`
+  src  : `${paths.root}/src`,
+  dest : `${paths.root}/dist`,
+  demo : `${paths.root}/docs`,
 };
 
 paths.js = {
-  srcMain : [`${paths.base.src}/index.js`],
-  src     : [`${paths.base.src}/lib/*{.js,/*.js}`],
-  dest    :  `${paths.base.dest}`
+  srcMain : [`${paths.base.src}/${packageName}.js`],
+  src     : [`${paths.base.src}/*{.js,/*.js}`],
+  dest    :  `${paths.base.dest}`,
 };
 
 paths.styles = {
-  src    : [`${paths.base.src}/lib/*.scss`],
-  dest   :  `${paths.base.dest}`
+  src    : [`${paths.base.src}/*.scss`],
+  dest   :  `${paths.base.dest}`,
 };
 
 paths.demo = {
-  html   : [`${paths.base.src}/demo/*{.html,/*.html}`],
-  scss   : [`${paths.base.src}/demo/*{.scss,/*.scss}`],
-  images : [`${paths.base.src}/demo/images/*.{png,jpg,gif,svg}`],
-  libSrc :  `${paths.base.dest}`,
-  dest   :  `${paths.base.demo}`
+  scssMain : [`${paths.base.demo}/styles/main.scss`],
+  scss     : [`${paths.base.demo}/styles/*{.scss,/*.scss}`],
+  jsMain   : [`${paths.base.demo}/scripts/main.js`],
+  js       : [`${paths.base.demo}/scripts/*{.js,/*.js}`],
+  dest     :  `${paths.base.demo}`,
 };
 
 
@@ -58,11 +58,14 @@ const bsConfig = require('./config/bs.config.js');
 
 const webpackConfig = PRODUCTION ? './config/webpack.prod.js' : './config/webpack.dev.js';
 
-const sassOptions = {};
-sassOptions.includePaths = ['node_modules'];
-sassOptions.outputStyle = PRODUCTION ? 'compressed' : 'expanded';
+const sassOptions = {
+  includePaths: ['node_modules', 'docs/node_modules'],
+  outputStyle:  PRODUCTION ? 'compressed' : 'expanded',
+};
 
-const postcssPlugins = [autoprefixer({ browsers: '> 5%, ie 9' })];
+const postcssPlugins = [
+  autoprefixer({ browsers: '> 5%, ie 9' })
+];
 
 
 
@@ -75,30 +78,31 @@ gulp.task('argv-test', () => {
 
 
 
-// demo
-
-gulp.task('demo:html', () => {
-  return gulp.src(paths.demo.html)
-    .pipe(gulp.dest(paths.demo.dest));
-});
+// demo's styles & scripts
 
 gulp.task('demo:styles', () => {
-  return gulp.src(paths.demo.scss)
+  return gulp.src(paths.demo.scssMain)
+    .pipe(sourcemaps.init())
     .pipe(sass(sassOptions).on('error', sass.logError))
     .pipe(postcss(postcssPlugins))
+    .pipe(rename({
+      basename: 'bundle'
+    }))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(paths.demo.dest));
 });
 
-gulp.task('demo:lib', () => {
-  return gulp.src(`${paths.demo.libSrc}/**/*`)
-    .pipe(gulp.dest(`${paths.demo.dest}/dist`));
+gulp.task('demo:js', () => {
+  return gulp.src(paths.demo.jsMain)
+    .pipe(webpack(require('./config/webpack.demo.js')))
+    .pipe(gulp.dest(paths.demo.dest));
 });
 
-gulp.task('demo', ['demo:html', 'demo:styles', 'demo:lib']);
+gulp.task('demo', ['demo:styles', 'demo:js']);
 
 
 
-// scripts
+// library's scripts
 
 gulp.task('build:js', () => {
   return gulp.src(paths.js.srcMain)
@@ -108,7 +112,7 @@ gulp.task('build:js', () => {
 
 
 
-// styles
+// library's styles
 
 gulp.task('build:styles', () => {
   return gulp.src(paths.styles.src)
@@ -124,14 +128,6 @@ gulp.task('build:styles', () => {
 
 
 
-// local dev server
-
-gulp.task('serve', ['watch'], () => {
-  browserSyncInstance.init(bsConfig);
-});
-
-
-
 // other tasks
 
 // gulp build [--production]
@@ -141,17 +137,24 @@ gulp.task('build', () => {
 
 gulp.task('watch', ['build'], () => {
   gulp.watch(paths.js.srcMain.concat(paths.js.src), () => {
-    runSequence('build:js', 'demo:lib');
+    runSequence('build:js', 'demo:js');
   });
 
   gulp.watch(paths.styles.src, () => {
-    runSequence('build:styles', 'demo:lib');
+    runSequence('build:styles', 'demo:styles');
   });
 
-  gulp.watch(paths.demo.html, ['demo:html']);
-  gulp.watch(paths.demo.scss, ['demo:styles']);
+  gulp.watch(paths.demo.scss, () => {
+    runSequence('demo:styles');
+  });
 
-  // gulp.watch(`${paths.demo.dest}/**/*`).on('change', browserSyncInstance.reload);
+  gulp.watch(paths.demo.js, () => {
+    runSequence('demo:js');
+  });
+});
+
+gulp.task('serve', ['watch'], () => {
+  browserSyncInstance.init(bsConfig);
 });
 
 gulp.task('default', ['serve']);
