@@ -6,11 +6,10 @@ const rootPath = '../';
 module.exports = {
   cache: true,
   entry: path.resolve(__dirname, rootPath, 'docs/scripts/main.js'),
+  target: 'web',
   output: {
-    path: path.resolve(__dirname, rootPath, 'docs'),
     filename: 'bundle.js',
-    library: 'demoBundle',
-    libraryTarget: 'umd'
+    path: path.resolve(__dirname, rootPath, 'docs'),
   },
   module: {
     rules: [
