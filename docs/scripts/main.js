@@ -1,1 +1,1 @@
-import '@bezet/tooltip';
+// import '@bezet/tooltip';
