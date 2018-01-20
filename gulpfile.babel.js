@@ -59,7 +59,7 @@ const bsConfig = require('./config/bs.config.js');
 const webpackConfig = PRODUCTION ? './config/webpack.prod.js' : './config/webpack.dev.js';
 
 const sassOptions = {
-  includePaths: ['node_modules'],
+  includePaths: ['node_modules', 'docs/node_modules'],
   outputStyle:  PRODUCTION ? 'compressed' : 'expanded',
 };
 
@@ -141,7 +141,7 @@ gulp.task('watch', ['build'], () => {
   });
 
   gulp.watch(paths.styles.src, () => {
-    runSequence('build:styles');
+    runSequence('build:styles', 'demo:styles');
   });
 
   gulp.watch(paths.demo.scss, () => {
