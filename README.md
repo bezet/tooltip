@@ -34,7 +34,7 @@ or
 MIT © [bezet](github.com/bezet)
 
 
-[npm-image]: https://badge.fury.io/js/baza-tooltip.svg
-[npm-url]: https://npmjs.org/package/baza-tooltip
-[daviddm-image]: https://david-dm.org/bezet/baza-tooltip.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/bezet/baza-tooltip
+[npm-image]: https://badge.fury.io/js/tooltip.svg
+[npm-url]: https://npmjs.org/package/tooltip
+[daviddm-image]: https://david-dm.org/bezet/tooltip.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/bezet/tooltip
