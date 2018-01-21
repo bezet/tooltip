@@ -34,7 +34,7 @@ or
 MIT © [bezet](github.com/bezet)
 
 
-[npm-image]: https://badge.fury.io/js/tooltip.svg
-[npm-url]: https://npmjs.org/package/tooltip
+[npm-image]: https://badge.fury.io/js/%40bezet%2Ftooltip.svg
+[npm-url]: https://npmjs.org/package/@bezet/tooltip
 [daviddm-image]: https://david-dm.org/bezet/tooltip.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/bezet/tooltip
