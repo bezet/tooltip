@@ -7,6 +7,7 @@ $arrElementHeight: $arrowHeight * 2;
   display: block;
   z-index: 999;
   position: fixed;
+  left: -100%;
   max-width: 15em;
   padding: .5em;
   margin: 0;
