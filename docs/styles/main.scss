@@ -199,6 +199,20 @@ body {
   right: 4px;
 }
 
+.back-btn {
+	display: block;
+	position: absolute;
+	left: 24px;
+	bottom: 64px;
+	width: 0;
+	height: 0;
+  text-indent: -10000px;
+
+	border-top: 24px solid transparent;
+	border-bottom: 24px solid transparent;
+	border-right: 24px solid $color1;
+}
+
 .tooltip {
   padding: 8px 12px;
   font-size: 1.4rem;
