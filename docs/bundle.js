@@ -147,13 +147,20 @@ var Tooltip = function () {
       this.tooltip.classList.add(this.settings.tooltipClass + '--' + tooltipPosition);
     }
   }, {
-    key: 'setTooltipVisibility',
-    value: function setTooltipVisibility() {
+    key: 'showTooltip',
+    value: function showTooltip() {
       var visibilityClass = this.settings.tooltipClass + '--visible';
 
       if (!this.tooltip.classList.contains(visibilityClass)) {
         this.tooltip.classList.add(visibilityClass);
-      } else {
+      }
+    }
+  }, {
+    key: 'hideTooltip',
+    value: function hideTooltip() {
+      var visibilityClass = this.settings.tooltipClass + '--visible';
+
+      if (this.tooltip.classList.contains(visibilityClass)) {
         this.tooltip.classList.remove(visibilityClass);
         this.tooltip.removeAttribute('style');
         this.resetClass();
@@ -342,12 +349,12 @@ var Tooltip = function () {
 
       this.setTooltipContent(element.dataset.tooltip);
       this.setTooltipPosition(element);
-      this.setTooltipVisibility();
+      this.showTooltip();
     }
   }, {
     key: 'mouseLeaveHandler',
     value: function mouseLeaveHandler() {
-      this.setTooltipVisibility();
+      this.hideTooltip();
     }
   }, {
     key: 'bindElementEvents',
