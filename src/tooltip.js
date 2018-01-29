@@ -68,9 +68,6 @@ class Tooltip {
       this.tooltip.classList.add(visibilityClass);
     } else {
       this.tooltip.classList.remove(visibilityClass);
-    }
-
-    if (!this.tooltip.classList.contains(visibilityClass)) {
       this.tooltip.removeAttribute('style');
       this.resetClass();
     }
