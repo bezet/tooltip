@@ -61,12 +61,18 @@ class Tooltip {
     this.tooltip.classList.add(`${this.settings.tooltipClass}--${tooltipPosition}`);
   }
 
-  setTooltipVisibility() {
+  showTooltip() {
     const visibilityClass = `${this.settings.tooltipClass}--visible`;
 
     if (!this.tooltip.classList.contains(visibilityClass)) {
       this.tooltip.classList.add(visibilityClass);
-    } else {
+    }
+  }
+
+  hideTooltip() {
+    const visibilityClass = `${this.settings.tooltipClass}--visible`;
+
+    if (this.tooltip.classList.contains(visibilityClass)) {
       this.tooltip.classList.remove(visibilityClass);
       this.tooltip.removeAttribute('style');
       this.resetClass();
@@ -249,11 +255,11 @@ class Tooltip {
 
     this.setTooltipContent(element.dataset.tooltip);
     this.setTooltipPosition(element);
-    this.setTooltipVisibility();
+    this.showTooltip();
   }
 
   mouseLeaveHandler() {
-    this.setTooltipVisibility();
+    this.hideTooltip();
   }
 
   bindElementEvents(element) {
